@@ -7,8 +7,6 @@ import UserComponent from './UserComponent.jsx';
 import ListingEntryDetails from './ListingEntryDetails.jsx';
 import Navigation from './Navigation.jsx';
 import App from './App.jsx';
-import Login from './Login.jsx';
-import Signup from './Signup.jsx';
 
 export default class Main extends React.Component {
   constructor(props) {
