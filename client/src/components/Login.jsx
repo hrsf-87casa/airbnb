@@ -21,6 +21,7 @@ export default class Login extends React.component {
       password: '',
       successfulLogin: false,
       displayMessage: '',
+      currentUserId: '',
     };
   }
 
@@ -51,7 +52,7 @@ export default class Login extends React.component {
           resp.statusCode === 200
             ? this.setState({
                 successfulLogin: true,
-                currentUser: resp.body.userId,
+                currentUserId: resp.body.userId,
               }) //how to handle the userId that is sent in
             : this.setState({
                 displayMessage: `Set the error here. resp.status?`,
@@ -62,26 +63,38 @@ export default class Login extends React.component {
   //todo: render dispplay message
   render() {
     return (
-      <form>
-        <label>
-          <input
-            type="text"
-            name="username"
-            value={this.state.username}
-            placeholder="Enter your name"
-            onChange={(event) => this.handleChange(event)}
+      <div className="login-component">
+        {this.state.successfulLogin ? (
+          <Redirect
+            to={{ pathname: `/listings/${this.state.currentUserId}` }}
           />
-          <br />
-          <input
-            type="text"
-            name="password"
-            value={this.state.password}
-            placeholder="Enter your password"
-            onChange={(event) => this.handleChange(event)}
-          />
-        </label>
-        <Button onClick={() => this.handleSubmit()} />
-      </form>
+        ) : (
+          <form>
+            <label>
+              <input
+                type="text"
+                name="username"
+                value={this.state.username}
+                placeholder="Enter your name"
+                onChange={(event) => this.handleChange(event)}
+              />
+              <br />
+              <input
+                type="text"
+                name="password"
+                value={this.state.password}
+                placeholder="Enter your password"
+                onChange={(event) => this.handleChange(event)}
+              />
+            </label>
+            <Button onClick={() => this.handleSubmit()}> Login </Button>
+            <br />
+            <Link to="/signup">
+              <Button>Sign Up</Button>
+            </Link>
+          </form>
+        )}
+      </div>
     );
   }
 }

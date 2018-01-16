@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Button,
   Collapse,
   Navbar,
   NavbarToggler,
@@ -32,10 +33,8 @@ export default class Signup extends React.component {
   }
 
   handleSubmit() {
-    //in here make the fetch
+    // in here make the fetch
     // {username, password, phoneNumber, email}
-    //should handle 200 success, 401 failed login, 500 database failure
-    //only get userId and status code back
     let { username, password, phoneNumber, email } = this.state;
     if (username === '') {
       return this.setState({
@@ -77,42 +76,48 @@ export default class Signup extends React.component {
   //todo: render displaymessage
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          <input
-            type="text"
-            name="username"
-            value={this.state.username}
-            placeholder="Enter your name"
-            onChange={(event) => this.handleChange(event)}
-          />
-          <br />
-          <input
-            type="text"
-            name="password"
-            value={this.state.password}
-            placeholder="Enter your password"
-            onChange={(event) => this.handleChange(event)}
-          />
-          <br />
-          <input
-            type="text"
-            name="email"
-            value={this.state.email}
-            placeholder="Enter your email address"
-            onChange={(event) => this.handleChange(event)}
-          />
-          <br />
-          <input
-            type="text"
-            name="phoneNumber"
-            value={this.state.phoneNumber}
-            placeholder="Enter your phone number"
-            onChange={(event) => this.handleChange(event)}
-          />
-        </label>
-        <input type="submit" />
-      </form>
+      <div className="signup-component">
+        {this.state.successfulSignup ? (
+          <Redirect to={{ pathname: `/login` }} />
+        ) : (
+          <form>
+            <label>
+              <input
+                type="text"
+                name="username"
+                value={this.state.username}
+                placeholder="Enter your name"
+                onChange={(event) => this.handleChange(event)}
+              />
+              <br />
+              <input
+                type="text"
+                name="password"
+                value={this.state.password}
+                placeholder="Enter your password"
+                onChange={(event) => this.handleChange(event)}
+              />
+              <br />
+              <input
+                type="text"
+                name="email"
+                value={this.state.email}
+                placeholder="Enter your email address"
+                onChange={(event) => this.handleChange(event)}
+              />
+              <br />
+              <input
+                type="text"
+                name="phoneNumber"
+                value={this.state.phoneNumber}
+                placeholder="Enter your phone number"
+                onChange={(event) => this.handleChange(event)}
+              />
+            </label>
+            <Button onClick={() => this.handleSubmit()} />
+          </form>
+        )}
+      </div>
     );
   }
 }
