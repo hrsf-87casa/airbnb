@@ -65,11 +65,11 @@ export default class Signup extends React.component {
     })
       .then(
         (resp) =>
-          resp.statusCode === 200
-            ? this.setState({ successfulLogin: true })
+          resp.statusCode === 201
+            ? this.setState({ successfulSignup: true })
             : this.setState({
-                displayMessage: `Set the error here. resp.status?`,
-              }), //should be 401 only
+                displayMessage: `Set the error here, Should be 409`,
+              }),
       )
       .catch(console.error); // should be 500 only
   }
