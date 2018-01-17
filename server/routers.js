@@ -136,6 +136,18 @@ router.get('/api/listings', async (req, res) => {
   }
 });
 
+router.post('/api/listings/host', async (req, res) => {
+  try {
+    if (!req.session.passport) {
+      return res.sendStatus(401);
+    }
+    const listing = await makeListing.postListing(req.body, req.session.passport.user);
+    return res.status(200).json(listing);
+  } catch (err) {
+    return res.status(500).json(err.stack);
+  }
+});
+
 router.get('/login', reactRoute);
 router.get('/signup', reactRoute);
 router.get('/listings*', reactRoute);
