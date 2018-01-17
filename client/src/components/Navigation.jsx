@@ -45,6 +45,7 @@ export default class Navigation extends React.Component {
               <NavLink href="/bookings">Bookings</NavLink>
             </NavItem>
             <NavItem>
+<<<<<<< HEAD
               <NavLink href="/profile">Profile</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
@@ -74,6 +75,12 @@ export default class Navigation extends React.Component {
 
                 </DropdownMenu>
               </UncontrolledDropdown>
+=======
+              <Link to="/listing/host">
+                <Button>Create a listing</Button>
+              </Link>
+            </NavItem>
+>>>>>>> (feat) complete basic addListing
           </Nav>
           </Collapse>
         </Navbar>
