@@ -6,13 +6,7 @@ const path = require('path');
 const passport = require('./userAuth/passport');
 const auth = require('./userAuth/auth');
 const googleAPI = require('../api/gMapClient.js');
-const {
-  getListingsByCity,
-  getListingById,
-  userHelper,
-  booking,
-  makeListing,
-} = require('../database');
+const db = require('../database');
 
 const router = express.Router();
 const reactRoute = (req, res) => res.sendFile(path.resolve(__dirname, '../client/dist/index.html'));
@@ -24,7 +18,7 @@ router.use(passport.session());
 
 router.post('/signup', async (req, res) => {
   try {
-    if (await userHelper.getUser(req.body.username)) {
+    if (await db.users.get(req.body.username)) {
       return res.sendStatus(409);
     }
     await auth.addUser(req.body.username, req.body.password, req.body.phoneNumber, req.body.email);
@@ -39,7 +33,7 @@ router.post('/login', passport.authenticate('local'), (req, res) =>
 
 router.get('/api/listings/details/:id', async (req, res) => {
   try {
-    const listing = await getListingById(req.params.id);
+    const listing = await db.search.byId(req.params.id);
     return res.status(200).json(listing);
   } catch (err) {
     return res.status(500).json(err.stack);
@@ -48,7 +42,7 @@ router.get('/api/listings/details/:id', async (req, res) => {
 
 router.post('/api/listings/search', async (req, res) => {
   try {
-    const listings = await getListingsByCity(req.body.city, req.body.state);
+    const listings = await db.search.byCityState(req.body.city, req.body.state);
     return res.status(200).json(listings);
   } catch (err) {
     return res.status(500).json(err.stack);
@@ -60,7 +54,7 @@ router.post('/api/bookings/reserve', async (req, res) => {
     if (!req.session.passport) {
       return res.sendStatus(401);
     }
-    const bookedDays = await booking.checkIfBooked(
+    const bookedDays = await db.reservations.check(
       req.body.listingId,
       req.body.start,
       req.body.end,
@@ -71,7 +65,7 @@ router.post('/api/bookings/reserve', async (req, res) => {
         reason: `Already booked during from ${new Date(bookedDays[0]).toLocaleDateString('en-US')} to ${new Date(bookedDays[1]).toLocaleDateString('en-US')}`,
       });
     }
-    const reservation = await booking.makeReservation(
+    const reservation = await db.reservations.make(
       req.session.passport.user,
       req.body.listingId,
       req.body.start,
@@ -91,11 +85,11 @@ router.get('/api/bookings/list', async (req, res) => {
     if (!req.session.passport) {
       return res.sendStatus(401);
     }
-    const reservations = await booking.getAllReservations(req.session.passport.user);
+    const reservations = await db.reservations.getAllByUserId(req.session.passport.user);
     const reservationsWithListings = await Promise.all(reservations.map(reservation =>
       new Promise(async (resolve, reject) => {
         try {
-          const listing = await getListingById(reservation.listing_id);
+          const listing = await db.search.byId(reservation.listing_id);
           return resolve({
             id: reservation.id,
             start: reservation.startDate,
@@ -117,11 +111,11 @@ router.post('/api/bookings/cancel', async (req, res) => {
     if (!req.session.passport) {
       return res.sendStatus(401);
     }
-    const reservation = await booking.getReservation(req.body.bookingId);
+    const reservation = await db.reservations.getById(req.body.bookingId);
     if (reservation.user_id !== req.session.passport.user) {
       return res.sendStatus(401);
     }
-    await booking.cancelReservation(req.body.bookingId);
+    await db.reservations.cancel(req.body.bookingId);
     return res.sendStatus(200);
   } catch (err) {
     return res.status(500).json(err.stack);
@@ -133,7 +127,7 @@ router.get('/api/listings', async (req, res) => {
     if (!req.session.passport) {
       return res.sendStatus(401);
     }
-    const listings = await makeListing.getListings(req.session.passport.user);
+    const listings = await db.listings.getAllByUserId(req.session.passport.user);
     return res.status(200).json(listings);
   } catch (err) {
     return res.status(500).json(err.stack);
@@ -145,7 +139,7 @@ router.post('/api/listings/host', async (req, res) => {
     if (!req.session.passport) {
       return res.sendStatus(401);
     }
-    const listing = await makeListing.postListing(req.body, req.session.passport.user);
+    const listing = await db.listings.post(req.body, req.session.passport.user);
     return res.status(200).json(listing);
   } catch (err) {
     return res.status(500).json(err.stack);
@@ -157,11 +151,11 @@ router.post('/api/listings/cancel', async (req, res) => {
     if (!req.session.passport) {
       return res.sendStatus(401);
     }
-    const listing = await getListingById(req.body.listingId);
+    const listing = await db.search.byId(req.body.listingId);
     if (listing.host_id !== req.session.passport.user) {
       return res.sendStatus(401);
     }
-    await makeListing.removeListing(req.body.listingId);
+    await db.listings.remove(req.body.listingId);
     return res.sendStatus(200);
   } catch (err) {
     return res.status(500).json(err.stack);

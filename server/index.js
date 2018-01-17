@@ -11,4 +11,4 @@ app
   .use(express.static(path.join(__dirname, '/../client/dist/')))
   .use(bodyParser.json())
   .use(routers)
-  .listen(PORT, () => console.log(`listening on ${PORT}`));
+  .listen(PORT, () => console.log(`aircasa listening on ${PORT}`));
