@@ -23,5 +23,3 @@ export default class Main extends React.Component {
     );
   }
 }
-
-// 2 buttons for login and signup which link to /signup /login
