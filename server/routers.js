@@ -62,11 +62,22 @@ router.post('/api/bookings/reserve', async (req, res) => {
     if (!req.session.passport) {
       return res.sendStatus(401);
     }
+    const bookedDays = await booking.checkIfBooked(
+      req.body.listingId,
+      req.body.start,
+      req.body.end,
+    );
+    if (bookedDays) {
+      return res.status(200).json({
+        isBooked: false,
+        reason: `Already booked during from ${new Date(bookedDays[0]).toLocaleDateString('en-US')} to ${new Date(bookedDays[1]).toLocaleDateString('en-US')}`,
+      });
+    }
     const reservation = await booking.makeReservation(
       req.session.passport.user,
       req.body.listingId,
       req.body.start,
-      req.body.stop,
+      req.body.end,
     );
     return res.status(200).json({
       isBooked: true,
@@ -105,7 +116,7 @@ router.get('/api/bookings/list', async (req, res) => {
 
 router.post('/api/bookings/cancel', async (req, res) => {
   try {
-    await booking.cancelReservation(res.body.bookingId);
+    await booking.cancelReservation(req.body.bookingId);
     res.sendStatus(200);
   } catch (err) {
     res.status(500).json(err.stack);
