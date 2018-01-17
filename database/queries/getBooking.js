@@ -6,6 +6,9 @@ const getAllReservations = userId =>
     [userId],
   );
 
+const getReservation = bookingId =>
+  connection.queryAsync('SELECT * FROM bookings WHERE id = ?', [bookingId]).then(data => data[0]);
+
 const getReservationsForListing = listingId =>
   connection.queryAsync('SELECT * FROM bookings WHERE listing_id = ?', [listingId]);
 
@@ -52,4 +55,5 @@ module.exports = {
   makeReservation,
   getReservationsForListing,
   checkIfBooked,
+  getReservation,
 };

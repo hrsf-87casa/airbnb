@@ -23,8 +23,6 @@ router.use(
 router.use(passport.initialize());
 router.use(passport.session());
 
-// router.use('/api', passport.authenticate('local', { failureRedirect: '/login' }));
-
 // router.get('/listings', passport.authenticate('local', { failureRedirect: '/login' }), reactRoute);
 
 router.post('/signup', async (req, res) => {
@@ -51,9 +49,9 @@ router.post('/login', passport.authenticate('local'), (req, res) =>
 router.post('/api/listings/search', async (req, res) => {
   try {
     const listings = await getListingsByCity(req.body.city, req.body.state);
-    res.status(200).json(listings);
+    return res.status(200).json(listings);
   } catch (err) {
-    res.status(500).json(err.stack);
+    return res.status(500).json(err.stack);
   }
 });
 
@@ -84,7 +82,7 @@ router.post('/api/bookings/reserve', async (req, res) => {
       bookingId: reservation.id,
     });
   } catch (err) {
-    res.status(500).json(err.stack);
+    return res.status(500).json(err.stack);
   }
 });
 
@@ -98,14 +96,14 @@ router.get('/api/bookings/list', async (req, res) => {
       new Promise(async (resolve, reject) => {
         try {
           const listing = await getListingById(reservation.listing_id);
-          resolve({
+          return resolve({
             id: reservation.id,
             start: reservation.startDate,
             end: reservation.endDate,
             listing,
           });
         } catch (err) {
-          reject(err);
+          return reject(err);
         }
       })));
     return res.status(200).json(reservationsWithListings);
@@ -116,28 +114,18 @@ router.get('/api/bookings/list', async (req, res) => {
 
 router.post('/api/bookings/cancel', async (req, res) => {
   try {
+    if (!req.session.passport) {
+      return res.sendStatus(401);
+    }
+    const reservation = await booking.getReservation(req.body.bookingId);
+    if (reservation.user_id !== req.session.passport.user) {
+      return res.sendStatus(401);
+    }
     await booking.cancelReservation(req.body.bookingId);
-    res.sendStatus(200);
+    return res.sendStatus(200);
   } catch (err) {
-    res.status(500).json(err.stack);
+    return res.status(500).json(err.stack);
   }
 });
-
-router.get('/usercomponent-v', (req, res) =>
-  user.getAllBooking((err, results) => {
-    if (err) {
-      return res.statusCode(500);
-    }
-    return res.json(results);
-  }));
-router.post('/usercomponent-v', (req, res) =>
-  user.cancelReservation((err, results) => {
-    // console.log(req.body.id)
-    if (err) {
-      console.log(err);
-    } else {
-      res.json(results);
-    }
-  }, req.body.id));
 
 module.exports = router;
