@@ -2,15 +2,13 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
+
 const passport = require('./userAuth/passport');
 const auth = require('./userAuth/auth');
 
 const router = express.Router();
 const {
-  getAllListings,
   getListingsByCity,
-  checkAvailability,
-  saveReservation,
   getListingById,
   userHelper,
   booking,
