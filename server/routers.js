@@ -1,6 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const path = require('path');
 const passport = require('./userAuth/passport');
 const auth = require('./userAuth/auth');
 
@@ -14,12 +15,12 @@ const {
   userHelper,
   booking,
 } = require('../database');
+
+const reactRoute = (req, res) => res.sendFile(path.resolve(__dirname, '../client/dist/index.html'));
 const googleAPI = require('./../api/gMapClient.js');
 
 router.use(cookieParser());
-router.use(
-  session({ secret: 'airbnb-casa', resave: false, saveUninitialized: false }),
-);
+router.use(session({ secret: 'airbnb-casa', resave: false, saveUninitialized: false }));
 router.use(passport.initialize());
 router.use(passport.session());
 
@@ -30,12 +31,7 @@ router.post('/signup', async (req, res) => {
     if (await userHelper.getUser(req.body.username)) {
       return res.sendStatus(409);
     }
-    await auth.addUser(
-      req.body.username,
-      req.body.password,
-      req.body.phoneNumber,
-      req.body.email,
-    );
+    await auth.addUser(req.body.username, req.body.password, req.body.phoneNumber, req.body.email);
     return res.sendStatus(200);
   } catch (err) {
     return res.status(500).json(err.stack);
@@ -43,8 +39,7 @@ router.post('/signup', async (req, res) => {
 });
 
 router.post('/login', passport.authenticate('local'), (req, res) =>
-  res.status(200).json({ userId: req.session.passport.user }),
-);
+  res.status(200).json({ userId: req.session.passport.user }));
 
 router.post('/api/listings/search', async (req, res) => {
   try {
@@ -127,5 +122,10 @@ router.post('/api/bookings/cancel', async (req, res) => {
     return res.status(500).json(err.stack);
   }
 });
+
+router.get('/login', reactRoute);
+router.get('/signup', reactRoute);
+router.get('/listings*', reactRoute);
+router.get('/bookings*', reactRoute);
 
 module.exports = router;
