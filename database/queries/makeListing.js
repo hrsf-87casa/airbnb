@@ -29,7 +29,11 @@ const postListing = (listing, userId) =>
     .then(data => connection.queryAsync('SELECT * FROM listings WHERE id = ?', [data.insertId]))
     .then(data => data[0]);
 
+const removeListing = listingId =>
+  connection.queryAsync('DELETE FROM listings WHERE id = ?', [listingId]);
+
 module.exports = {
   getListings,
   postListing,
+  removeListing,
 };

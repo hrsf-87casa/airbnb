@@ -148,6 +148,22 @@ router.post('/api/listings/host', async (req, res) => {
   }
 });
 
+router.post('/api/listings/cancel', async (req, res) => {
+  try {
+    if (!req.session.passport) {
+      return res.sendStatus(401);
+    }
+    const listing = await getListingById(req.body.listingId);
+    if (listing.host_id !== req.session.passport.user) {
+      return res.sendStatus(401);
+    }
+    await makeListing.removeListing(req.body.listingId);
+    return res.sendStatus(200);
+  } catch (err) {
+    return res.status(500).json(err.stack);
+  }
+});
+
 router.get('/login', reactRoute);
 router.get('/signup', reactRoute);
 router.get('/listings*', reactRoute);
