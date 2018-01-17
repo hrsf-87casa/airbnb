@@ -12,6 +12,7 @@ const {
   saveReservation,
   getListingById,
   userHelper,
+  booking,
 } = require('../database');
 const googleAPI = require('./../api/gMapClient.js');
 
@@ -38,7 +39,7 @@ router.post('/signup', async (req, res) => {
     );
     return res.sendStatus(200);
   } catch (err) {
-    return res.status(401).json(err.stack);
+    return res.status(500).json(err.stack);
   }
 });
 
@@ -55,60 +56,70 @@ router.post('/api/listings/search', async (req, res) => {
   }
 });
 
-router.post('*/bookings-james', (req, res) => {
-  let dates = req.body.data;
-  let listingId = req.body.listing;
-  let userId = req.body.user;
-  checkAvailability(listingId, dates, (results) => {
-    results
-      ? saveReservation(listingId, userId, dates, (results) =>
-          res.send('success'),
-        )
-      : res.send('failure');
-  });
+router.post('/api/bookings/reserve', async (req, res) => {
+  try {
+    const reservation = await booking.makeReservation(
+      req.body.userId,
+      req.body.listingId,
+      req.body.start,
+      req.body.stop,
+    );
+    res.status(200).json({
+      isBooked: true,
+      bookingId: reservation.id,
+    });
+  } catch (err) {
+    res.status(500).json(err.stack);
+  }
 });
 
-router.get('*/listings-ted', (req, res) =>
-  getAllListings((results) => {
-    res.json(results);
-  }),
-);
+router.post('/api/bookings/list', async (req, res) => {
+  try {
+    const reservations = await booking.getAllReservations(req.body.userId);
+    const reservationsWithListings = await Promise.all(reservations.map(reservation =>
+      new Promise(async (resolve, reject) => {
+        try {
+          const listing = await getListingById(reservation.listing_id);
+          resolve({
+            id: reservation.id,
+            start: reservation.startDate,
+            end: reservation.endDate,
+            listing,
+          });
+        } catch (err) {
+          reject(err);
+        }
+      })));
+    res.status(200).json(reservationsWithListings);
+  } catch (err) {
+    res.status(500).json(err.stack);
+  }
+});
 
-router.get('*/listings-iris', (req, res) => {
-  var finalResults = {};
-  getListingById(req.query.listingId)
-    .then((listingObj) => {
-      finalResults.listing = listingObj[0];
-      return googleAPI.getAddress(JSON.stringify(listingObj));
-    })
-    .then((addr) => {
-      finalResults.address = addr;
-      return googleAPI.getLatLong(addr, (data) => {
-        finalResults.latLong = data.json.results[0].geometry.location;
-        res.json(finalResults);
-      });
-    })
-    .catch((err) => res.json(err));
+router.post('/api/bookings/cancel', async (req, res) => {
+  try {
+    await booking.cancelReservation(res.body.bookingId);
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).json(err.stack);
+  }
 });
 
 router.get('/usercomponent-v', (req, res) =>
-  user.getAllBooking(function(err, results) {
+  user.getAllBooking((err, results) => {
     if (err) {
       return res.statusCode(500);
-    } else {
-      return res.json(results);
     }
-  }),
-);
+    return res.json(results);
+  }));
 router.post('/usercomponent-v', (req, res) =>
-  user.cancelReservation(function(err, results) {
-    //console.log(req.body.id)
+  user.cancelReservation((err, results) => {
+    // console.log(req.body.id)
     if (err) {
       console.log(err);
     } else {
       res.json(results);
     }
-  }, req.body.id),
-);
+  }, req.body.id));
 
 module.exports = router;
