@@ -19,10 +19,9 @@ export default class ListingEntryDetails extends React.Component {
     super(props);
 
     this.state = {
-      listingId: this.props.match.params.id || this.props.id,
+      listingId: this.props.match.params.id,
       listing: {},
     };
-    console.log(this.props.match.params.id);
   }
 
   componentDidMount() {
@@ -35,6 +34,7 @@ export default class ListingEntryDetails extends React.Component {
 
   getListing() {
     fetch(`/api/listing/details/${this.state.listingId}`)
+      .then(resp => resp.json())
       .then((listing) => {
         this.setState({ listing });
       })
