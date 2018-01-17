@@ -14,6 +14,7 @@ export default class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+<<<<<<< HEAD
 }
     render () {
       return (
@@ -22,6 +23,17 @@ export default class Main extends React.Component {
         </div>
       );
     }
+=======
+  }
+  render() {
+    return (
+      <div>
+        <Navigation />
+        <App />
+      </div>
+    );
+  }
+>>>>>>> Merge Conflict
 }
 
-//2 buttons for login and signup which link to /signup /login
+// 2 buttons for login and signup which link to /signup /login
