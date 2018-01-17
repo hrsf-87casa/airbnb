@@ -20,7 +20,7 @@ export default class Search extends React.Component {
   }
 
   render() {
-    const states = ['California', 'Florida', 'Louisiana', 'Washington'];
+    const states = ['Please Select a State', 'California', 'Florida', 'Louisiana', 'Washington'];
 
     return (
       <Form className="search-container">
@@ -37,7 +37,6 @@ export default class Search extends React.Component {
           <Label className="state-label" htmlFor="state">
             State
           </Label>
-          {/* //TODO: add onchange set state state to event.target.value */}
           <Input
             className="state-select"
             type="select"
