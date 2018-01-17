@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 import Search from './Search.jsx';
 import 'bootstrap/dist/css/bootstrap.css';
 
-export default class Signup extends React.component {
+export default class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

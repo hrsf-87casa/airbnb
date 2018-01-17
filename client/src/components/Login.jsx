@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 import Search from './Search.jsx';
 import 'bootstrap/dist/css/bootstrap.css';
 
-export default class Login extends React.component {
+export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -66,7 +66,7 @@ export default class Login extends React.component {
       <div className="login-component">
         {this.state.successfulLogin ? (
           <Redirect
-            to={{ pathname: `/listings/${this.state.currentUserId}` }}
+            to={{ pathname: `/listings/${this.state.currentUserId}` }} // this will be the first page they see on login
           />
         ) : (
           <form>
