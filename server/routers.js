@@ -14,6 +14,7 @@ const {
   getListingById,
   userHelper,
   booking,
+  makeListing,
 } = require('../database');
 
 const reactRoute = (req, res) => res.sendFile(path.resolve(__dirname, '../client/dist/index.html'));
@@ -118,6 +119,18 @@ router.post('/api/bookings/cancel', async (req, res) => {
     }
     await booking.cancelReservation(req.body.bookingId);
     return res.sendStatus(200);
+  } catch (err) {
+    return res.status(500).json(err.stack);
+  }
+});
+
+router.get('/api/listings', async (req, res) => {
+  try {
+    if (!req.session.passport) {
+      return res.sendStatus(401);
+    }
+    const listings = await makeListing.getListings(req.session.passport.user);
+    return res.status(200).json(listings);
   } catch (err) {
     return res.status(500).json(err.stack);
   }
