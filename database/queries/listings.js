@@ -1,4 +1,4 @@
-const connection = require('../config.js');
+const connection = require('../config');
 
 const getAllByUserId = userId =>
   connection.queryAsync('SELECT * FROM listings WHERE host_id = ?', [userId]);

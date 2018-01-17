@@ -3,10 +3,12 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
 
-const passport = require('./userAuth/passport');
-const auth = require('./userAuth/auth');
-const googleAPI = require('../api/gMapClient.js');
+const passport = require('./passport');
+const auth = require('./auth');
 const db = require('../database');
+
+const bookings = require('./bookings');
+const listings = require('./listings');
 
 const router = express.Router();
 const reactRoute = (req, res) => res.sendFile(path.resolve(__dirname, '../client/dist/index.html'));
@@ -33,8 +35,7 @@ router.post('/login', passport.authenticate('local'), (req, res) =>
 
 router.get('/api/listings/details/:id', async (req, res) => {
   try {
-    const listing = await db.search.byId(req.params.id);
-    return res.status(200).json(listing);
+    return res.status(200).json(await db.search.byId(req.params.id));
   } catch (err) {
     return res.status(500).json(err.stack);
   }
@@ -42,8 +43,7 @@ router.get('/api/listings/details/:id', async (req, res) => {
 
 router.post('/api/listings/search', async (req, res) => {
   try {
-    const listings = await db.search.byCityState(req.body.city, req.body.state);
-    return res.status(200).json(listings);
+    return res.status(200).json(await db.search.byCityState(req.body.city, req.body.state));
   } catch (err) {
     return res.status(500).json(err.stack);
   }
@@ -54,27 +54,15 @@ router.post('/api/bookings/reserve', async (req, res) => {
     if (!req.session.passport) {
       return res.sendStatus(401);
     }
-    const bookedDays = await db.reservations.check(
-      req.body.listingId,
-      req.body.start,
-      req.body.end,
-    );
-    if (bookedDays) {
-      return res.status(200).json({
-        isBooked: false,
-        reason: `Already booked during from ${new Date(bookedDays[0]).toLocaleDateString('en-US')} to ${new Date(bookedDays[1]).toLocaleDateString('en-US')}`,
-      });
-    }
-    const reservation = await db.reservations.make(
-      req.session.passport.user,
-      req.body.listingId,
-      req.body.start,
-      req.body.end,
-    );
-    return res.status(200).json({
-      isBooked: true,
-      bookingId: reservation.id,
-    });
+
+    return res
+      .status(200)
+      .json(await bookings.reserve(
+        req.session.passport.user,
+        req.body.listingId,
+        req.body.start,
+        req.body.end,
+      ));
   } catch (err) {
     return res.status(500).json(err.stack);
   }
@@ -85,22 +73,8 @@ router.get('/api/bookings/list', async (req, res) => {
     if (!req.session.passport) {
       return res.sendStatus(401);
     }
-    const reservations = await db.reservations.getAllByUserId(req.session.passport.user);
-    const reservationsWithListings = await Promise.all(reservations.map(reservation =>
-      new Promise(async (resolve, reject) => {
-        try {
-          const listing = await db.search.byId(reservation.listing_id);
-          return resolve({
-            id: reservation.id,
-            start: reservation.startDate,
-            end: reservation.endDate,
-            listing,
-          });
-        } catch (err) {
-          return reject(err);
-        }
-      })));
-    return res.status(200).json(reservationsWithListings);
+
+    return res.status(200).json(await bookings.list(req.session.passport.user));
   } catch (err) {
     return res.status(500).json(err.stack);
   }
@@ -111,12 +85,8 @@ router.post('/api/bookings/cancel', async (req, res) => {
     if (!req.session.passport) {
       return res.sendStatus(401);
     }
-    const reservation = await db.reservations.getById(req.body.bookingId);
-    if (reservation.user_id !== req.session.passport.user) {
-      return res.sendStatus(401);
-    }
-    await db.reservations.cancel(req.body.bookingId);
-    return res.sendStatus(200);
+
+    return res.sendStatus(await bookings.cancel(req.body.bookingId));
   } catch (err) {
     return res.status(500).json(err.stack);
   }
@@ -127,8 +97,8 @@ router.get('/api/listings', async (req, res) => {
     if (!req.session.passport) {
       return res.sendStatus(401);
     }
-    const listings = await db.listings.getAllByUserId(req.session.passport.user);
-    return res.status(200).json(listings);
+
+    return res.status(200).json(await listings.get(req.session.passport.user));
   } catch (err) {
     return res.status(500).json(err.stack);
   }
@@ -139,8 +109,8 @@ router.post('/api/listings/host', async (req, res) => {
     if (!req.session.passport) {
       return res.sendStatus(401);
     }
-    const listing = await db.listings.post(req.body, req.session.passport.user);
-    return res.status(200).json(listing);
+
+    return res.status(200).json(await listings.host(req.body, req.session.passport.user));
   } catch (err) {
     return res.status(500).json(err.stack);
   }
@@ -151,12 +121,8 @@ router.post('/api/listings/cancel', async (req, res) => {
     if (!req.session.passport) {
       return res.sendStatus(401);
     }
-    const listing = await db.search.byId(req.body.listingId);
-    if (listing.host_id !== req.session.passport.user) {
-      return res.sendStatus(401);
-    }
-    await db.listings.remove(req.body.listingId);
-    return res.sendStatus(200);
+
+    return res.sendStatus(await listings.cancel(req.body.listingId, req.session.passport.user));
   } catch (err) {
     return res.status(500).json(err.stack);
   }

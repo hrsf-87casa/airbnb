@@ -1,4 +1,4 @@
-const connection = require('./../config.js');
+const connection = require('../config');
 
 const byId = id =>
   connection.queryAsync('SELECT * FROM listings WHERE id = ?', [id]).then(data => data[0]);

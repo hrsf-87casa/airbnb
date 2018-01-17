@@ -2,7 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 const auth = require('./auth');
-const { users } = require('../../database');
+const { users } = require('../database');
 
 passport.use(new LocalStrategy(async (username, password, done) => {
   try {
