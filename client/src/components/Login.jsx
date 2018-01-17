@@ -28,26 +28,17 @@ export default class Login extends React.Component {
     };
   }
 
-  //write function to change signup, then rerender
-
   handleSignup() {
-    console.log('IN handleSignup');
     this.setState({ signup: true, displayMessage: '' });
   }
 
   handleChange(event) {
-    console.log('IN LOGIN HANDLECHANGE');
     this.setState({
       [event.target.name]: event.target.value,
     });
   }
 
   handleSubmit() {
-    //in here make the fetch
-    // {username, password}
-    //should handle 200 success, 401 failed login, 500 database failure
-    //only get userId and status code back
-    console.log('In HandleSubmit in Login.jsx');
     let { username, password } = this.state;
     if (username === '') {
       return this.setState({

@@ -26,9 +26,6 @@ router.use(passport.session());
 
 // passport
 router.post('/signup', async (req, res) => {
-  console.log('test');
-  console.log(req.body.username);
-  console.log(req.body.password);
   try {
     if (await userHelper.getUser(req.body.username)) {
       return res.sendStatus(409);

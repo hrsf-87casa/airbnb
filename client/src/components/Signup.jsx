@@ -28,15 +28,12 @@ export default class Signup extends React.Component {
   }
 
   handleChange(event) {
-    console.log('IN SIGNUP HANDLECHANGE');
     this.setState({
       [event.target.name]: event.target.value,
     });
-    console.log(this.state[event.target.name]);
   }
 
   handleSubmit() {
-    console.log('The submit was pressed in Signup.jsx');
     let { username, password, phoneNumber, email } = this.state;
     if (username === '') {
       return this.setState({
