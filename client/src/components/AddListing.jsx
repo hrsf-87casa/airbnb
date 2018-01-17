@@ -18,7 +18,21 @@ export default class AddListing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      placeHolder: 'placeholder',
+      num_guests: '',
+      bedrooms: '',
+      bathrooms: '',
+      name: '',
+      description: '',
+      summary: '',
+      neighborhood: '',
+      street_address: '',
+      zip_code: '',
+      city: '',
+      state: '',
+      cancellation_policy: '',
+      nightly_price: '',
+      pic_url: '',
+      rating: '',
     };
   }
 
