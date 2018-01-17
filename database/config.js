@@ -1,6 +1,8 @@
 const mysql = require('mysql');
 
-const connection = mysql.createConnection(process.env.DATABASE_URL);
+const connection = mysql.createConnection(
+  process.env.DATABASE_URL || 'mysql://root:@localhost/airbnb',
+);
 
 connection.connect((err) => {
   if (err) {
