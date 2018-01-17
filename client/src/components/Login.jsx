@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Alert,
   Button,
   Collapse,
   FormGroup,
@@ -31,7 +32,7 @@ export default class Login extends React.Component {
 
   handleSignup() {
     console.log('IN handleSignup');
-    this.setState({ signup: true });
+    this.setState({ signup: true, displayMessage: '' });
   }
 
   handleChange(event) {
@@ -60,7 +61,7 @@ export default class Login extends React.Component {
     })
       .then(
         (resp) =>
-          resp.statusCode === 200
+          resp.status === 200
             ? this.setState({
                 successfulLogin: true,
                 currentUserId: resp.body.userId,
@@ -71,16 +72,21 @@ export default class Login extends React.Component {
       )
       .catch(console.error); // should be 500 only
   }
-  //todo: render dispplay message
+
   render() {
     return (
       <div className="login-component">
         {this.state.successfulLogin ? (
           <Redirect
-            to={{ pathname: `/listings/${this.state.currentUserId}` }} // this will be the first page they see on login
+            to={{ pathname: '/' }} // this will be the first page they see on login
           />
         ) : (
           <div className="Login-Only">
+            {this.state.displayMessage ? (
+              <div color="danger">{this.state.displayMessage}</div>
+            ) : (
+              undefined
+            )}
             {this.state.signup ? (
               <div>
                 <Redirect to="/signup" />
@@ -104,9 +110,15 @@ export default class Login extends React.Component {
                     onChange={(event) => this.handleChange(event)}
                   />
                 </label>
-                <Button onClick={() => this.handleSubmit()}> Login </Button>
+                <Button onClick={() => this.handleSubmit()} color="primary">
+                  {' '}
+                  Login{' '}
+                </Button>
                 <br />
-                <Button onClick={() => this.handleSignup()}> Signup </Button>
+                <Button onClick={() => this.handleSignup()} color="primary">
+                  {' '}
+                  Signup{' '}
+                </Button>
               </FormGroup>
             )}
           </div>

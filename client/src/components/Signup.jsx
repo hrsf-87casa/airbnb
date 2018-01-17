@@ -36,38 +36,36 @@ export default class Signup extends React.Component {
   }
 
   handleSubmit() {
-    // in here make the fetch
-    // {username, password, phoneNumber, email}
     console.log('The submit was pressed in Signup.jsx');
     let { username, password, phoneNumber, email } = this.state;
     if (username === '') {
       return this.setState({
-        displayMessage: 'Loogin requires a username',
+        displayMessage: 'Login requires a username',
       });
     }
     if (password === '') {
       return this.setState({
-        displayMessage: 'Loogin requires a passswoord',
+        displayMessage: 'Login requires a passswoord',
       });
     }
     if (phoneNumber === '') {
       return this.setState({
-        displayMessage: 'Loogin requires a phone number',
+        displayMessage: 'Login requires a phone number',
       });
     }
     if (email === '') {
       return this.setState({
-        displayMessage: 'Loogin requires an email address',
+        displayMessage: 'Login requires an email address',
       });
     }
     fetch('/signup', {
       method: 'POST',
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, password, email, phoneNumber }),
       headers: { 'content-type': 'application/JSON' },
     })
       .then(
         (resp) =>
-          resp.statusCode === 201
+          resp.status === 200
             ? this.setState({ successfulSignup: true })
             : this.setState({
                 displayMessage: `Set the error here, Should be 409`,
@@ -93,46 +91,55 @@ export default class Signup extends React.Component {
         {this.state.successfulSignup ? (
           <Redirect to={{ pathname: `/login` }} />
         ) : (
-          <form>
-            <br />
-            <br />
-            <br />
-            <label>
-              <input
-                type="text"
-                name="username"
-                value={this.state.username}
-                placeholder="Enter your name"
-                onChange={(event) => this.handleChange(event)}
-              />
+          <div>
+            {this.state.displayMessage ? (
+              <div>{this.state.displayMessage}</div>
+            ) : (
+              undefined
+            )}
+            <form>
               <br />
-              <input
-                type="text"
-                name="password"
-                value={this.state.password}
-                placeholder="Enter your password"
-                onChange={(event) => this.handleChange(event)}
-              />
               <br />
-              <input
-                type="text"
-                name="email"
-                value={this.state.email}
-                placeholder="Enter your email address"
-                onChange={(event) => this.handleChange(event)}
-              />
               <br />
-              <input
-                type="text"
-                name="phoneNumber"
-                value={this.state.phoneNumber}
-                placeholder="Enter your phone number"
-                onChange={(event) => this.handleChange(event)}
-              />
-            </label>
-            <br />
-            <Button onClick={() => this.handleSubmit()}>Click to signup</Button>
-          </form>
+              <label>
+                <input
+                  type="text"
+                  name="username"
+                  value={this.state.username}
+                  placeholder="Enter your name"
+                  onChange={(event) => this.handleChange(event)}
+                />
+                <br />
+                <input
+                  type="text"
+                  name="password"
+                  value={this.state.password}
+                  placeholder="Enter your password"
+                  onChange={(event) => this.handleChange(event)}
+                />
+                <br />
+                <input
+                  type="text"
+                  name="email"
+                  value={this.state.email}
+                  placeholder="Enter your email address"
+                  onChange={(event) => this.handleChange(event)}
+                />
+                <br />
+                <input
+                  type="text"
+                  name="phoneNumber"
+                  value={this.state.phoneNumber}
+                  placeholder="Enter your phone number"
+                  onChange={(event) => this.handleChange(event)}
+                />
+              </label>
+              <br />
+              <Button onClick={() => this.handleSubmit()} color="primary">
+                Click to signup
+              </Button>
+            </form>
+          </div>
         )}
       </div>
     );
