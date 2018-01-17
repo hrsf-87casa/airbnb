@@ -23,9 +23,10 @@ router.use(
 router.use(passport.initialize());
 router.use(passport.session());
 
+// router.use('/api', passport.authenticate('local', { failureRedirect: '/login' }));
+
 // router.get('/listings', passport.authenticate('local', { failureRedirect: '/login' }), reactRoute);
 
-// passport
 router.post('/signup', async (req, res) => {
   try {
     if (await userHelper.getUser(req.body.username)) {
@@ -58,13 +59,16 @@ router.post('/api/listings/search', async (req, res) => {
 
 router.post('/api/bookings/reserve', async (req, res) => {
   try {
+    if (!req.session.passport) {
+      return res.sendStatus(401);
+    }
     const reservation = await booking.makeReservation(
-      req.body.userId,
+      req.session.passport.user,
       req.body.listingId,
       req.body.start,
       req.body.stop,
     );
-    res.status(200).json({
+    return res.status(200).json({
       isBooked: true,
       bookingId: reservation.id,
     });
@@ -73,9 +77,12 @@ router.post('/api/bookings/reserve', async (req, res) => {
   }
 });
 
-router.post('/api/bookings/list', async (req, res) => {
+router.get('/api/bookings/list', async (req, res) => {
   try {
-    const reservations = await booking.getAllReservations(req.body.userId);
+    if (!req.session.passport) {
+      return res.sendStatus(401);
+    }
+    const reservations = await booking.getAllReservations(req.session.passport.user);
     const reservationsWithListings = await Promise.all(reservations.map(reservation =>
       new Promise(async (resolve, reject) => {
         try {
@@ -90,9 +97,9 @@ router.post('/api/bookings/list', async (req, res) => {
           reject(err);
         }
       })));
-    res.status(200).json(reservationsWithListings);
+    return res.status(200).json(reservationsWithListings);
   } catch (err) {
-    res.status(500).json(err.stack);
+    return res.status(500).json(err.stack);
   }
 });
 
