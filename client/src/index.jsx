@@ -80,11 +80,15 @@ ReactDOM.render(
   <BrowserRouter history={BrowserHistory}>
     <div>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <Route exact path="/" component={App} />
       <Route path="/" component={Navigation} />
 =======
       <Route path="/" component={Login} />
 >>>>>>> (refactor) refactor for consistent naming
+=======
+      <Route path="/" component={App} />
+>>>>>>> (feat) Create basic login and signup components
       <Route path="/bookings" component={UserComponent} />
       <Route exact path="/listings/:state--:city" component={Listings} />
       <Route
@@ -97,24 +101,3 @@ ReactDOM.render(
   </BrowserRouter>,
   document.getElementById('app'),
 );
-
-// ReactDOM.render(
-//   <BrowserRouter history={BrowserHistory}>
-//     <div>
-//       <Route path="/" component={App} />
-//       <Route path="/bookings" component={UserComponent} />
-//       <Route
-//         exact
-//         path="/listings/:city"
-//         render={(props) => <Listings match={props.match} />}
-//       />
-//       <Route
-//         path="/listings/:city/:id"
-//         render={(props) => <ListingEntryDetails match={props.match} />}
-//       />
-//       <Route path="/signup" component={Signup} />
-//       <Route path="/login" component={Login} />
-//     </div>
-//   </BrowserRouter>,
-//   document.getElementById('app'),
-// );

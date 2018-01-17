@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Button,
   Collapse,
+  FormGroup,
   Navbar,
   NavbarToggler,
   NavbarBrand,
@@ -9,7 +10,7 @@ import {
   NavItem,
   NavLink,
 } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Search from './Search.jsx';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -27,14 +28,17 @@ export default class Signup extends React.Component {
   }
 
   handleChange(event) {
+    console.log('IN SIGNUP HANDLECHANGE');
     this.setState({
       [event.target.name]: event.target.value,
     });
+    console.log(this.state[event.target.name]);
   }
 
   handleSubmit() {
     // in here make the fetch
     // {username, password, phoneNumber, email}
+    console.log('The submit was pressed in Signup.jsx');
     let { username, password, phoneNumber, email } = this.state;
     if (username === '') {
       return this.setState({
@@ -56,7 +60,6 @@ export default class Signup extends React.Component {
         displayMessage: 'Loogin requires an email address',
       });
     }
-
     fetch('/signup', {
       method: 'POST',
       body: JSON.stringify({ username, password }),
@@ -73,14 +76,27 @@ export default class Signup extends React.Component {
       .catch(console.error); // should be 500 only
   }
 
-  //todo: render displaymessage
+  //todo: render displaymessage!!
   render() {
+    const styles = {
+      body: {
+        paddingTop: '40px',
+        paddingBottom: '40px',
+        maxWidth: '330px',
+        padding: '15px',
+        margin: '20 auto',
+        textAlign: 'center',
+      },
+    };
     return (
-      <div className="signup-component">
+      <div className="signup-component" style={styles.body}>
         {this.state.successfulSignup ? (
           <Redirect to={{ pathname: `/login` }} />
         ) : (
           <form>
+            <br />
+            <br />
+            <br />
             <label>
               <input
                 type="text"
@@ -114,7 +130,8 @@ export default class Signup extends React.Component {
                 onChange={(event) => this.handleChange(event)}
               />
             </label>
-            <Button onClick={() => this.handleSubmit()} />
+            <br />
+            <Button onClick={() => this.handleSubmit()}>Click to signup</Button>
           </form>
         )}
       </div>
