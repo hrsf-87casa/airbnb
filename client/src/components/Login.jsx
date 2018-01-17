@@ -42,7 +42,7 @@ export default class Login extends React.Component {
     let { username, password } = this.state;
     if (username === '') {
       return this.setState({
-        displayMessage: 'Loogin requires a usenamed',
+        displayMessage: 'Login requires a username',
       });
     }
     fetch('/login', {
@@ -118,6 +118,3 @@ export default class Login extends React.Component {
     );
   }
 }
-// <Redirect to="/signup">
-//               <Button>Sign Up</Button>
-//             </Redirect>
