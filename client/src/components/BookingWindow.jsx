@@ -9,11 +9,9 @@ export default class BookingWindow extends React.Component {
     this.state = {
       startDate: '',
       endDate: '',
-      isBooked: false,
       totalPrice: null,
       successMessage: '',
       failMessage: '',
-      bookingId: null,
     };
     this.setStartDate = this.setStartDate.bind(this);
     this.setEndDate = this.setEndDate.bind(this);
@@ -67,12 +65,10 @@ export default class BookingWindow extends React.Component {
             successMessage: `Successfully booked!! From ${moment(this.state.startDate).format('MMMM Do YYYY')} to ${moment(this.state.endDate).format('MMMM Do YYYY')} Your booking ID is ${
               resp.bookingId
             }`,
-            isBooked: true,
           });
         } else {
           this.setState({
             failMessage: resp.reason,
-            isBooked: false,
           });
         }
       })
