@@ -195,6 +195,7 @@ export default class AddListing extends React.Component {
           />
         ) : (
           <div className="Login-Only" style={styles.body}>
+            
             {this.state.displayMessage ? (
               <div color="danger">{this.state.displayMessage}</div>
             ) : (
@@ -206,11 +207,8 @@ export default class AddListing extends React.Component {
               </div>
             ) : (
               <div style={styles.body}>
-                <Form>
-                  <br />
-                  <br />
-                  <br />
-                  <br />
+                <div className="add-form">
+                  <h1>LIST SOMETHING</h1>
                   <FormGroup>
                     <Label for="propertyName">Property Name</Label>
                     <Input
@@ -380,7 +378,7 @@ export default class AddListing extends React.Component {
                     />
                   </FormGroup>
                   <Button color="primary" onClick={() => this.createListing()}>Create your listing</Button>
-                </Form>
+                </div>
               </div>
             )}
             {this.state.displayMessage ? (
