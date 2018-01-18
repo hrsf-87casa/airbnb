@@ -36,7 +36,10 @@ router.post('/signup', async (req, res) => {
 });
 
 router.post('/login', passport.authenticate('local'), (req, res) =>
-  res.status(200).json({ userId: req.session.passport.user }));
+  res
+    .set('access-control-allow-credentials', 'true')
+    .status(200)
+    .json({ userId: req.session.passport.user }));
 
 /*
   Listings search and details
