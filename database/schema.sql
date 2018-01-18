@@ -10,7 +10,7 @@ CREATE TABLE `listings` (
   `bedrooms` INTEGER NOT NULL,
   `bathrooms` INTEGER NOT NULL,
   `name` VARCHAR(100) NOT NULL,
-  `description` VARCHAR(2048) NULL DEFAULT NULL,
+  `description` VARCHAR(3072) NULL DEFAULT NULL,
   `summary` VARCHAR(1024) NULL DEFAULT NULL,
   `neighborhood` VARCHAR(100) NULL DEFAULT NULL,
   `street_address` VARCHAR(255) NOT NULL,
