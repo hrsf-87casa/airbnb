@@ -6,7 +6,7 @@ const getAllByUserId = userId =>
 const post = (listing, userId) =>
   connection
     .queryAsync(
-      'INSERT INTO listings (num_guests, bedrooms, bathrooms, name, description, summary, neighborhood, street_address, zip_code, city, state, cancellation_policy, nightly_price, pic_url, rating, host_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      'INSERT INTO listings (num_guests, bedrooms, bathrooms, name, description, summary, neighborhood, street_address, zip_code, city, state, cancellation_policy, nightly_price, pic_url, rating, host_id, lat, lng) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [
         listing.num_guests,
         listing.bedrooms,
@@ -24,6 +24,8 @@ const post = (listing, userId) =>
         listing.pic_url,
         listing.rating,
         userId,
+        listing.lat,
+        listing.lng,
       ],
     )
     .then(data => connection.queryAsync('SELECT * FROM listings WHERE id = ?', [data.insertId]))
