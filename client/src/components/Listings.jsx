@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, CardColumns } from 'reactstrap';
 
 import ListingEntry from './ListingEntry.jsx';
 
@@ -28,40 +28,32 @@ export default class Listings extends React.Component {
     })
       .then(resp => resp.json())
       .then((data) => {
-        const splitResults = [];
-        for (let i = 0; i < data.length; i += 3) {
-          splitResults.push(data.slice(i, i + 3));
-        }
-        this.setState({ listings: splitResults });
-        console.log(data.length);
+        this.setState({ listings: data });
       })
       .catch(console.log);
   }
 
   render() {
     return (
-      <div>
-        <center>
-          <h3>
-            Listings for {this.props.match.params.city}, {this.props.match.params.state}
-          </h3>
-        </center>
-        <Container>
-          {this.state.listings.map(listing => (
-            <Row>
-              <Col>
-                <ListingEntry listing={listing[0]} key={listing[0].id} />
-              </Col>
-              <Col>
-                {listing[1] ? <ListingEntry listing={listing[1]} key={listing[1].id} /> : ''}
-              </Col>
-              <Col>
-                {listing[2] ? <ListingEntry listing={listing[2]} key={listing[2].id} /> : ''}
-              </Col>
-            </Row>
-          ))};
+      <Container>
+        <Container style={{ paddingBottom: '10px' }}>
+          <center>
+            <h3>
+              Listings for{' '}
+              <span style={{ textTransform: 'capitalize' }}>
+                {this.props.match.params.city}, {this.props.match.params.state}
+              </span>
+            </h3>
+          </center>
         </Container>
-      </div>
+        <Container>
+          <CardColumns>
+            {this.state.listings.map(listing => (
+              <ListingEntry listing={listing} key={listing.id} />
+            ))}
+          </CardColumns>
+        </Container>
+      </Container>
     );
   }
 }
