@@ -171,7 +171,7 @@ export default class AddListing extends React.Component {
             to={{ pathname: '/' }} // this will be the page they go to after successful post
           />
         ) : (
-          <div className="Login-Only">
+          <div className="Login-Only" style={styles.body}>
             {this.state.displayMessage ? (
               <div color="danger">{this.state.displayMessage}</div>
             ) : (
@@ -359,6 +359,11 @@ export default class AddListing extends React.Component {
                   <Button color="primary" onClick={() => this.createListing()}>Create your listing</Button>
                 </Form>
               </div>
+            )}
+            {this.state.displayMessage ? (
+              <div color="danger" style={styles.body} >{this.state.displayMessage}</div>
+            ) : (
+              undefined
             )}
           </div>  
         )}
