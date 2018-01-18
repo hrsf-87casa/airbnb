@@ -1,10 +1,11 @@
+const reservations = require('./queries/reservations');
+const search = require('./queries/search');
+const users = require('./queries/users');
+const listings = require('./queries/listings');
+
 module.exports = {
-  getAllListings: require('./queries/getAllListings.js'),
-  booking: require('./queries/getBooking.js'),
-  getListingsByCity: require('./queries/getListingsByCity.js'),
-  checkAvailability: require('./queries/checkAvailability.js'),
-  saveReservation: require('./queries/saveReservation.js'),
-  getListingById: require('./queries/getListingById.js'),
-  userHelper: require('./queries/userHelper.js'),
-  makeListing: require('./queries/makeListing'),
+  reservations,
+  search,
+  users,
+  listings,
 };
