@@ -169,7 +169,7 @@ export default class AddListing extends React.Component {
           })
           : this.setState({
             displayMessage:
-                  'This could only happen if the listing already exists. Is that a possibility?',
+                  'You must have a passport session to host. Log in!',
           })))
       .catch(console.error); // should be 500 only
   }
@@ -183,6 +183,7 @@ export default class AddListing extends React.Component {
         padding: '15px',
         margin: '20 auto',
         textAlign: 'center',
+        height: '100vh',
       },
     };
 
@@ -296,7 +297,7 @@ export default class AddListing extends React.Component {
                       type="text"
                       name="state"
                       id="state"
-                      placeholder="e.g. California"
+                      placeholder="e.g. California, Florida, Louisiana, or Washington"
                       onChange={event => this.handleChange(event)}
                     />
                   </FormGroup>
