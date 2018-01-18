@@ -50,6 +50,7 @@ export default class AddListing extends React.Component {
   createListing() {
     //surely I could use a loop to check, not sure with destructuring
     const {
+      num_guests,
       bedrooms,
       bathrooms,
       name,
@@ -60,7 +61,7 @@ export default class AddListing extends React.Component {
       zip_code,
       city,
       state,
-      cancellation,
+      cancellation_policy,
       nightly_price,
       pic_url,
       rating,
@@ -68,6 +69,11 @@ export default class AddListing extends React.Component {
     if (rating === '') {
       return this.setState({
         displayMessage: 'You must rate your own property. The Database requires it.',
+      });
+    }
+    if (num_guests === '') {
+      return this.setState({
+        displayMessage: 'You must enter a maximum capacity',
       });
     }
     if (pic_url === '') {
@@ -80,7 +86,7 @@ export default class AddListing extends React.Component {
         displayMessage: 'You must set a price',
       });
     }
-    if (cancellation === '') {
+    if (cancellation_policy === '') {
       return this.setState({
         displayMessage: 'You must choose a cancellation policy',
       });
@@ -135,9 +141,25 @@ export default class AddListing extends React.Component {
         displayMessage: 'Bathrooms cannot be empty',
       });
     }
-    fetch('/listing/host', {
+    fetch('/api/listings/host', {
       method: 'POST',
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({
+        num_guests,
+        bedrooms,
+        bathrooms,
+        name,
+        description,
+        summary,
+        neighborhood,
+        street_address,
+        zip_code,
+        city,
+        state,
+        cancellation_policy,
+        nightly_price,
+        pic_url,
+        rating,
+      }),
       headers: { 'content-type': 'application/JSON' },
     })
       .then(resp =>
