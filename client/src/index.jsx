@@ -12,8 +12,8 @@ import Main from './components/Main.jsx';
 import AddListings from './components/AddListing.jsx';
 import HostListings from './components/HostListings.jsx';
 import AddListing from './components/AddListing.jsx';
-import Settings from './components/Settings.jsx';
-import Profile from './components/Profile.jsx';
+import SettingsContainer from './components/Settings/SettingsContainer.jsx';
+import ProfileContainer from './components/Profile/ProfileContainer.jsx';
 
 ReactDOM.render(
   <BrowserRouter history={BrowserHistory}>
@@ -26,8 +26,8 @@ ReactDOM.render(
       <Route exact path="/listings/:state--:city" component={Results} />
       <Route path="/listings/:state--:city/:id" component={ListingEntryDetails} />
       <Route path="/host" component={AddListing} />
-      <Route path="/settings" component={Settings} />
-      <Route path="/profile" component={Profile} />
+      <Route path="/settings" component={SettingsContainer} />
+      <Route path="/profile" component={ProfileContainer} />
       <Route exact path="/listings/hosted" component={HostListings} />
     </div>
   </BrowserRouter>,
