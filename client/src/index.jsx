@@ -23,7 +23,7 @@ ReactDOM.render(
       <Route path="/bookings" component={UserComponent} />
       <Route exact path="/listings/:state--:city" component={Results} />
       <Route path="/listings/:state--:city/:id" component={ListingEntryDetails} />
-      <Route exact path="/listings/host" component={AddListing} />
+      <Route path="/host" component={AddListing} />
       <Route exact path="/listings/hosted" component={HostListings} />
     </div>
   </BrowserRouter>,

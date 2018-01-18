@@ -1,56 +1,42 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import ListingEntry from './ListingEntry.jsx';
+import { Container } from 'reactstrap';
 
-export default class Listings extends React.Component {
+import Listings from './Listings.jsx';
+
+export default class Results extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       listings: [],
-      hasListings: false,
     };
-    console.log(this.props);
-    this.createListing = this.createListing.bind(this);
   }
 
-  componentWillMount() {
-    console.log('IN COMOPONENT WILL MOUNT');
+  componentDidMount() {
     this.createListing();
   }
 
   createListing() {
-    // surely I could use a loop to check, not sure with destructuring
-    console.log('IN CREATELISTING');
     fetch('/api/listings')
       .then(resp => resp.json())
       .then(resp =>
         this.setState({
-          hasListings: true,
           listings: resp,
         }))
       .catch(console.error); // should be 500 only
   }
 
   render() {
-    console.log(this.state);
     return (
-      <div>
-        <h3>
-          <u>All listings</u>
-        </h3>
-        {this.state.hasListings ? (
-          this.state.listings.map(listing => (
-            <ListingEntry
-              listing={listing}
-              key={listing.id}
-              state={listing.state}
-              city={listing.city}
-            />
-          ))
-        ) : (
-          <h1 color="alert"> Y U NO OWN LISTING </h1>
-        )}
-      </div>
+      <Container>
+        <Container style={{ paddingBottom: '10px' }}>
+          <center>
+            <h3>
+              <span style={{ textTransform: 'capitalize' }}>Your Listings</span>
+            </h3>
+          </center>
+        </Container>
+        <Listings listings={this.state.listings} />
+      </Container>
     );
   }
 }
