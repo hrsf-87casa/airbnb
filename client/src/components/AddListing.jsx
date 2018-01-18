@@ -191,7 +191,7 @@ export default class AddListing extends React.Component {
       <div className="addListing" style={styles.body}>
         {this.state.listingAdded ? (
           <Redirect
-            to={{ pathname: '/' }} // this will be the page they go to after successful post
+            to={{ pathname: '/listings/hosted' }} // this will be the page they go to after successful post
           />
         ) : (
           <div className="Login-Only" style={styles.body}>
