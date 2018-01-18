@@ -337,7 +337,7 @@ export default class AddListing extends React.Component {
                       type="text"
                       name="pic_url"
                       id="pic_url"
-                      placeholder="e.g. 20500"
+                      placeholder="e.g. https://www.mlbtraderumors.com/files/2018/01/McCutchenInsta-300x300.png"
                       onChange={event => this.handleChange(event)}
                     />
                   </FormGroup>
