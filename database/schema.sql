@@ -51,6 +51,14 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 );
 
+DROP TABLE IF EXISTS `searches`;
+
+CREATE TABLE `searches` (
+  `id` INTEGER NOT NULL AUTO_INCREMENT,
+  `query` VARCHAR(255) NOT NULL UNIQUE,
+  PRIMARY KEY (`id`)
+);
+
 ALTER TABLE `bookings` ADD FOREIGN KEY (listing_id) REFERENCES `listings` (`id`);
 ALTER TABLE `bookings` ADD FOREIGN KEY (user_id) REFERENCES `users` (`id`);
 ALTER TABLE `listings` ADD FOREIGN KEY (host_id) REFERENCES `users` (`id`);
