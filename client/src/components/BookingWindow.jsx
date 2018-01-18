@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-responsive-modal';
+import moment from 'moment';
 import { Alert, UncontrolledAlert } from 'reactstrap';
 
 export default class BookingWindow extends React.Component {
