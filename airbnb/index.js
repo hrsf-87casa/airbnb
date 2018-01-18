@@ -3,7 +3,6 @@ const connection = require('../database/config');
 const get = require('./get');
 
 const search = async (city, state) => {
-  console.log(await db.search.check(city, state));
   if (await db.search.check(city, state)) {
     return db.search.byCityState(city, state);
   }
