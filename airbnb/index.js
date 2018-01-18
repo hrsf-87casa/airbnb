@@ -12,15 +12,19 @@ const search = async (city, state) => {
   const data = await get.search(query);
   const users = await connection.queryAsync('SELECT * FROM users');
 
-  await Promise.race(data.map(async (listing) => {
+  const loadDetails = await Promise.all(data.map(async (listing) => {
     const quickListing = get.format(listing);
     const user = users[Math.floor(Math.random() * users.length)];
     const listingInDb = await db.listings.post(quickListing, user.id);
     console.log(`"${quickListing.name}" added, hosted by "${user.name}"`);
-    const details = await get.details(listing.listing.id);
-    const fullListing = get.format(listing, details);
-    await db.listings.update(listingInDb.id, fullListing);
-    console.log(`Full data for listing "${fullListing.name}", hosted by "${user.name}", added`);
+    return { listing, user, listingInDb };
+  }));
+
+  await Promise.race(loadDetails.map(async (detail) => {
+    const details = await get.details(detail.listing.listing.id);
+    const fullListing = get.format(detail.listing, details);
+    await db.listings.update(detail.listingInDb.id, fullListing);
+    console.log(`Full data for listing "${fullListing.name}", hosted by "${detail.user.name}", added`);
   }));
 
   await connection.queryAsync('INSERT INTO searches (query) VALUES (?)', [query]);
