@@ -16,7 +16,9 @@ export default class Results extends React.Component {
   }
 
   createListing() {
-    fetch('/api/listings')
+    fetch('/api/listings', {
+      credentials: 'include',
+    })
       .then(resp => resp.json())
       .then(resp =>
         this.setState({

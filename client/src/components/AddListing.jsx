@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Button,
   Collapse,
+  Container,
   Form,
   FormGroup,
   Input,
@@ -29,13 +30,13 @@ export default class AddListing extends React.Component {
       summary: '',
       neighborhood: '',
       street_address: '',
-      zip_code: '',
+      zip_code: 12345,
       city: '',
       state: '',
       cancellation_policy: '',
-      nightly_price: '',
+      nightly_price: 9.99 ,
       pic_url: '',
-      rating: '',
+      rating: 0,
       listingAdded: false,
       displayMessage: '',
     };
@@ -48,7 +49,6 @@ export default class AddListing extends React.Component {
   }
 
   createListing() {
-    //surely I could use a loop to check, not sure with destructuring
     const {
       num_guests,
       bedrooms,
@@ -143,6 +143,7 @@ export default class AddListing extends React.Component {
     }
     fetch('/api/listings/host', {
       method: 'POST',
+      credentials: 'include',
       body: JSON.stringify({
         num_guests,
         bedrooms,
@@ -169,7 +170,7 @@ export default class AddListing extends React.Component {
           })
           : this.setState({
             displayMessage:
-                  'You must have a passport session to host. Log in!',
+                  'You must be logged in to host!',
           })))
       .catch(console.error); // should be 500 only
   }
@@ -177,27 +178,56 @@ export default class AddListing extends React.Component {
   render() {
     const styles = {
       body: {
+        color: 'black',
         paddingTop: '40px',
-        paddingBottom: '40px',
-        maxWidth: '330px',
         padding: '15px',
-        margin: '20 auto',
+        margin: 'auto',
         textAlign: 'center',
         height: '100vh',
+        width: '100%',
+        position: 'relative',
       },
+      form: {
+        color: 'black',
+        backgroundColor: '#ff73b3',
+        opacity: '1',
+        overflow: 'scroll',
+      },
+      warning: {
+        color: '#D8000C',
+        backgroundColor: '#FFD2D2',
+        position: 'absolute',
+        bottom: '80%',
+      },
+      btn: {
+        cursor: 'pointer',
+        textAlign: 'center',
+        margin: '0 auto',
+        color: '#fff',
+        backgroundColor: '#ff73b3',
+        opacity: '1',
+
+      }, 
+      input: {
+        textAlign: 'center',
+        color: '#000',
+        opcaity: '1',
+        maxWidth: '100%',
+      }
     };
 
     return (
-      <div className="addListing" style={styles.body}>
+      <Container className="addListing" style={styles.body}>
         {this.state.listingAdded ? (
           <Redirect
             to={{ pathname: '/listings/hosted' }} // this will be the page they go to after successful post
           />
         ) : (
-          <div className="Login-Only" style={styles.body}>
+          
+          <div className="Login-Only" style={styles.form}>
             
             {this.state.displayMessage ? (
-              <div color="danger">{this.state.displayMessage}</div>
+              <div color="danger" style={styles.warning}>{this.state.displayMessage}</div>
             ) : (
               undefined
             )}
@@ -207,11 +237,12 @@ export default class AddListing extends React.Component {
               </div>
             ) : (
               <div style={styles.body}>
-                <div className="add-form">
-                  <h1>LIST SOMETHING</h1>
+              <h1>LIST SOMETHING</h1>
+                <div className="add-form">  
                   <FormGroup>
                     <Label for="propertyName">Property Name</Label>
                     <Input
+                      style={styles.input}
                       type="text"
                       name="name"
                       id="name"
@@ -223,6 +254,7 @@ export default class AddListing extends React.Component {
                     <Label for="num_guests">Number of Guests</Label>
                     <Input
                       type="number"
+                      style={styles.input}
                       name="num_guests"
                       id="num_guests"
                       placeholder="Choose a maximum capacity"
@@ -232,6 +264,7 @@ export default class AddListing extends React.Component {
                   <FormGroup>
                     <Label for="bathrooms">Number of Bathrooms</Label>
                     <Input
+                      style={styles.input}
                       type="number"
                       name="bathrooms"
                       id="bathrooms"
@@ -242,6 +275,7 @@ export default class AddListing extends React.Component {
                   <FormGroup>
                     <Label for="bedrooms">Number of Bedrooms</Label>
                     <Input
+                      style={styles.input}
                       type="number"
                       name="bedrooms"
                       id="bedrooms"
@@ -252,6 +286,7 @@ export default class AddListing extends React.Component {
                   <FormGroup>
                     <Label for="neighborhood">Neighborhood</Label>
                     <Input
+                      style={styles.input}
                       type="text"
                       name="neighborhood"
                       id="neighborhood"
@@ -262,6 +297,7 @@ export default class AddListing extends React.Component {
                   <FormGroup>
                     <Label for="street_address">Street Address</Label>
                     <Input
+                      style={styles.input}
                       type="text"
                       name="street_address"
                       id="street_address"
@@ -272,6 +308,7 @@ export default class AddListing extends React.Component {
                   <FormGroup>
                     <Label for="zip_code">ZIP code</Label>
                     <Input
+                      style={styles.input}
                       type="number"
                       name="zip_code"
                       id="zip_code"
@@ -282,6 +319,7 @@ export default class AddListing extends React.Component {
                   <FormGroup>
                     <Label for="city">City</Label>
                     <Input
+                      style={styles.input}
                       type="text"
                       name="city"
                       id="city"
@@ -292,6 +330,7 @@ export default class AddListing extends React.Component {
                   <FormGroup>
                     <Label for="state">State</Label>
                     <Input
+                      style={styles.input}
                       type="text"
                       name="state"
                       id="state"
@@ -302,6 +341,7 @@ export default class AddListing extends React.Component {
                   <FormGroup>
                     <Label for="chooseRating">Select your Cancellation Policy</Label>
                     <Input
+                      style={styles.input}
                       type="select"
                       name="cancellation_policy"
                       id="cancellation_policy"
@@ -324,6 +364,7 @@ export default class AddListing extends React.Component {
                   <FormGroup>
                     <Label for="nightly_price">Price per Night</Label>
                     <Input
+                      style={styles.input}
                       type="number"
                       name="nightly_price"
                       id="zip_code"
@@ -334,6 +375,7 @@ export default class AddListing extends React.Component {
                   <FormGroup>
                     <Label for="pic_url">Choose a picture URL</Label>
                     <Input
+                      style={styles.input}
                       type="text"
                       name="pic_url"
                       id="pic_url"
@@ -344,6 +386,7 @@ export default class AddListing extends React.Component {
                   <FormGroup>
                     <Label for="chooseRating">Rate your listing</Label>
                     <Input
+                      style={styles.input}
                       type="select"
                       name="rating"
                       id="listingRating"
@@ -360,6 +403,7 @@ export default class AddListing extends React.Component {
                   <FormGroup>
                     <Label for="description">Describe your listing</Label>
                     <Input
+                      style={styles.input}
                       type="textarea"
                       name="description"
                       id="description"
@@ -370,6 +414,7 @@ export default class AddListing extends React.Component {
                   <FormGroup>
                     <Label for="summary">Summarize your listing</Label>
                     <Input
+                      style={styles.input}
                       type="textarea"
                       name="summary"
                       id="summary"
@@ -377,18 +422,18 @@ export default class AddListing extends React.Component {
                       onChange={event => this.handleChange(event)}
                     />
                   </FormGroup>
-                  <Button color="primary" onClick={() => this.createListing()}>Create your listing</Button>
+                  <Button style={styles.btn} onClick={() => this.createListing()}>Create your listing</Button>
                 </div>
               </div>
             )}
             {this.state.displayMessage ? (
-              <div color="danger" style={styles.body} >{this.state.displayMessage}</div>
+              <div color="danger" style={styles.warning} >{this.state.displayMessage}</div>
             ) : (
               undefined
             )}
           </div>  
         )}
-      </div>
+      </Container>
     );
   }
 }
