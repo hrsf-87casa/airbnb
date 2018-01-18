@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 const fetch = require('node-fetch');
 =======
 const googleMapsClient = require('@google/maps').createClient({
@@ -13,6 +14,9 @@ let getLatLong = (address, callback) => {
     .then((response) => callback(response))
     .catch((err) => console.log('err', err));
 };
+>>>>>>> Merge conflict
+=======
+const fetch = require('node-fetch');
 >>>>>>> Merge conflict
 
 const getLatLong = async (address) => {
