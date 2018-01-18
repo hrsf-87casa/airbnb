@@ -34,7 +34,6 @@ const insertData = async (location) => {
   const data = await fetch(encodeURI(`https://api.airbnb.com/v2/search_results?client_id=3092nxybyb0otqw18e8nh5nty&locale=en-US&currency=USD&_format=for_search_results_with_minimal_pricing&_limit=20&_offset=0&fetch_facets=true&guests=1&location=${location}&min_num_pic_urls=1&sort=1`)).then(resp => resp.json());
 
   return Promise.all(data.search_results.map(async (listing) => {
-    console.log(1);
     const formattedListing = await format(listing);
     const user = users[Math.floor(Math.random() * users.length)];
     await listings.post(formattedListing, user.id);
