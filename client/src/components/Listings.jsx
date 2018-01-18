@@ -1,8 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import axios from 'axios';
+import { Container, Row, Col } from 'reactstrap';
+
 import ListingEntry from './ListingEntry.jsx';
-import { Switch, Route } from 'react-router-dom';
 
 export default class Listings extends React.Component {
   constructor(props) {
@@ -10,7 +9,6 @@ export default class Listings extends React.Component {
     this.state = {
       listings: [],
     };
-    console.log(this.props);
   }
 
   componentDidMount() {
@@ -18,31 +16,51 @@ export default class Listings extends React.Component {
   }
 
   getInfo() {
-    axios
-      .post('/api/listings/search', {
+    fetch('/api/listings/search', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
         city: this.props.match.params.city,
         state: this.props.match.params.state,
+      }),
+    })
+      .then(resp => resp.json())
+      .then((data) => {
+        const splitResults = [];
+        for (let i = 0; i < data.length; i += 3) {
+          splitResults.push(data.slice(i, i + 3));
+        }
+        this.setState({ listings: splitResults });
+        console.log(data.length);
       })
-      .then((response) => {
-        this.setState({ listings: response.data });
-      })
-      .catch(error => console.log(error));
+      .catch(console.log);
   }
 
   render() {
     return (
       <div>
-        <h3>
-          <u>All listings</u>
-        </h3>
-        {this.state.listings.map(listing => (
-          <ListingEntry
-            listing={listing}
-            key={listing.id}
-            state={this.props.match.params.state}
-            city={this.props.match.params.city}
-          />
-        ))}
+        <center>
+          <h3>
+            Listings for {this.props.match.params.city}, {this.props.match.params.state}
+          </h3>
+        </center>
+        <Container>
+          {this.state.listings.map(listing => (
+            <Row>
+              <Col>
+                <ListingEntry listing={listing[0]} key={listing[0].id} />
+              </Col>
+              <Col>
+                {listing[1] ? <ListingEntry listing={listing[1]} key={listing[1].id} /> : ''}
+              </Col>
+              <Col>
+                {listing[2] ? <ListingEntry listing={listing[2]} key={listing[2].id} /> : ''}
+              </Col>
+            </Row>
+          ))};
+        </Container>
       </div>
     );
   }
