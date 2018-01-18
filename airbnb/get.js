@@ -8,7 +8,7 @@ const format = (
       description: 'loading',
       summary: 'loading',
       zipcode: '00000',
-      state: 'loading',
+      state: listing.listing.public_address.split(', ')[1],
       cancellation_policy: 'loading',
     },
   },
