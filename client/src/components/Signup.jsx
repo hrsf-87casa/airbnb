@@ -108,7 +108,7 @@ export default class Signup extends React.Component {
                 onChange={event => this.handleChange(event)}
               />
               <Input
-                type="text"
+                type="password"
                 name="password"
                 value={this.state.password}
                 placeholder="Enter your password"
