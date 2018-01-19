@@ -2,8 +2,12 @@
   display: inline-block
 }*/
 
+#app {
+  position: relative !important;
+}
+
 body {
-  font-family: Circular, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Circular, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.43;
   color: #484848;
@@ -39,7 +43,8 @@ body {
   font-weight: normal !important;
   margin: 0px !important;
   word-wrap: break-word !important;
-  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif !important;
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+    Helvetica Neue, sans-serif !important;
   font-size: 12px !important;
   line-height: 16px !important;
   letter-spacing: 0.4px !important;
@@ -49,7 +54,7 @@ body {
 }
 
 hr.bookingwindow-hr {
-  border: 1px solid #D3D3D3;
+  border: 1px solid #d3d3d3;
 }
 
 .dateSelectionSubmit {
@@ -69,7 +74,8 @@ hr.bookingwindow-hr {
   border: 2px solid transparent !important;
   border-radius: 4px !important;
   width: 100% !important;
-  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif !important;
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+    Helvetica Neue, sans-serif !important;
   font-size: 19px !important;
   line-height: 22px !important;
   padding-top: 12px !important;
@@ -78,7 +84,7 @@ hr.bookingwindow-hr {
   padding-right: 24px !important;
   padding-left: 24px !important;
   min-width: 77.66563145999496px !important;
-  background: #FF5A5F !important;
+  background: #ff5a5f !important;
 }
 
 .listingDiv {
@@ -90,10 +96,113 @@ hr.bookingwindow-hr {
   margin-top: 0px;
 }
 
-.mainSearch {
-  position: absolute;
-  top: 30%;
-  right: 50%;
+.app-container {
+  height: 80vh !important;
+  max-height: 800px !important;
+}
+
+.main-container {
+  display: table !important;
+  position: relative !important;
+  height: 100% !important;
+  width: 100% !important;
+  justify-content: center;
+}
+
+@media (max-width: 743px) {
+  max-width: 743px;
+}
+
+.mainSearch-conatiner {
+  margin-top: 10%;
+}
+
+.search-container {
+  display: table-cell !important;
+  vertical-align: middle !important;
+  max-width: 60vw;
+}
+
+.search-brand-name {
+  font-size: 25px !important;
+  line-height: 30px !important;
+  letter-spacing: -0.6px !important;
+}
+
+.search-brand-name {
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+    Helvetica Neue, sans-serif !important;
+  font-size: 28px !important;
+  line-height: 32px !important;
+  letter-spacing: -0.6px !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  color: #ff5a5f !important;
+  font-weight: 700 !important;
+}
+
+.search-tagline {
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+    Helvetica Neue, sans-serif !important;
+  font-size: 28px !important;
+  line-height: 32px !important;
+  letter-spacing: -0.6px !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  color: #484848 !important;
+  font-weight: 300 !important;
+}
+
+.search-city-container,
+.search-state-container {
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+    Helvetica Neue, sans-serif !important;
+  font-size: 15px !important;
+  line-height: 18px !important;
+  letter-spacing: 0.2px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  color: #484848 !important;
+  background-color: #ffffff !important;
+  border-radius: 4px !important;
+  border: 1px solid #dbdbdb !important;
+  position: relative !important;
+  box-shadow: 0 5px 30px rgba(156, 160, 171, 0.25) !important;
+}
+
+.search-button {
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+    Helvetica Neue, sans-serif !important;
+  font-size: 19px !important;
+  line-height: 15px !important;
+  letter-spacing: undefined !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  color: #ffffff !important;
+  padding-left: 18px !important;
+  padding-right: 18px !important;
+  border-radius: 4px !important;
+  border: 0px !important;
+  background: #ff5a5f !important;
+  margin: 12px !important;
+  margin-left: 16px !important;
+  height: 48px !important;
+  text-align: center !important;
+  display: inline-block !important;
+  float: right !important;
+  white-space: nowrap !important;
+}
+
+.navbar-brand-name {
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+    Helvetica Neue, sans-serif !important;
+  font-size: 28px !important;
+  line-height: 32px !important;
+  letter-spacing: -0.6px !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  color: #ff5a5f !important;
+  font-weight: 700 !important;
 }
 
 form {
