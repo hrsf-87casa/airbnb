@@ -166,7 +166,10 @@ router.get(
   (req, res) => (req.session.passport ? res.redirect('/') : reactRoute(req, res)),
 );
 
-router.get('/logoff', (req, res) => req.session.destroy(() => res.redirect('/')));
+router.get('/logoff', (req, res) => req.session.destroy(() => {
+  res.clearCookie('connect.sid');
+  res.redirect('/');
+}));
 router.get('/listings*', reactRoute);
 router.get('/bookings*', protectedReactRoute);
 router.get('/host', protectedReactRoute);
