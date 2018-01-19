@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 
-const connection = mysql.createPool(process.env.DATABASE_URL, {
+const connection = mysql.createPool(process.env.DATABASE_URL || 'mysql://root:@localhost/airbnb', {
   connectionLimit: 2,
 });
 
