@@ -58,14 +58,20 @@ export default class Navigation extends React.Component {
                     <NavLink>Host</NavLink>
                   </Link>
                 </NavItem>
+
                 <NavItem>
                   <Link to="/bookings">
                     <NavLink>Bookings</NavLink>
                   </Link>
                 </NavItem>
                 <NavItem>
-                  <Link to="/profile">
+                  <Link to="profile">
                     <NavLink>Profile</NavLink>
+                  </Link>
+                </NavItem>
+                <NavItem>
+                  <Link to="/settings">
+                    <NavLink>Settings</NavLink>
                   </Link>
                 </NavItem>
                 <NavItem>
