@@ -24,7 +24,6 @@ class Main extends React.Component {
   }
   setUserId(val) {
     console.log('settings');
-    console.log(val);
     this.setState({ userId: val });
   }
   render() {
