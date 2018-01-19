@@ -14,6 +14,10 @@ const profile = require('./profile');
 
 const router = express.Router();
 const reactRoute = (req, res) => res.sendFile(path.resolve(__dirname, '../client/dist/index.html'));
+const protectedReactRoute = (req, res) =>
+  (req.session.passport
+    ? res.sendFile(path.resolve(__dirname, '../client/dist/index.html'))
+    : res.redirect('/login'));
 
 /*
   Passport and user authentication
@@ -166,8 +170,19 @@ router.get('/api/user/profile', async (req, res) => {
   React Router
 */
 
-router.get('/login', reactRoute);
-router.get('/signup', reactRoute);
+router.get(
+  '/login',
+  (req, res) => (req.session.passport ? res.redirect('/') : reactRoute(req, res)),
+);
+router.get(
+  '/signup',
+  (req, res) => (req.session.passport ? res.redirect('/') : reactRoute(req, res)),
+);
+
+router.get('/logoff', (req, res) => req.session.destroy(() => {
+  res.clearCookie('connect.sid');
+  res.redirect('/');
+}));
 router.get('/listings*', reactRoute);
 router.get('/bookings*', reactRoute);
 router.get('/host', reactRoute);
