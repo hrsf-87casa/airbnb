@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import ListingEntry from './ListingEntry.jsx';
-import { CardColumns, Container, Jumbotron } from 'reactstrap';
+import { CardDeck, Container, Jumbotron } from 'reactstrap';
 
 class UserComponent extends React.Component {
   constructor(props) {
@@ -63,7 +63,7 @@ class UserComponent extends React.Component {
           </Container>
           <Container>
             <Jumbotron>
-              <CardColumns>
+              <CardDeck>
                 {this.state.currentBookings.map(booking => (
                   <ListingEntry
                     listing={booking.listing}
@@ -73,7 +73,7 @@ class UserComponent extends React.Component {
                     showButton
                   />
                 ))}
-              </CardColumns>
+              </CardDeck>
             </Jumbotron>
           </Container>
           <div />
@@ -86,7 +86,7 @@ class UserComponent extends React.Component {
           </Container>
           <Container>
             <Jumbotron>
-              <CardColumns>
+              <CardDeck>
                 {this.state.pastBookings.map(booking => (
                   <ListingEntry
                     listing={booking.listing}
@@ -96,7 +96,7 @@ class UserComponent extends React.Component {
                     showButton={false}
                   />
                 ))}
-              </CardColumns>
+              </CardDeck>
             </Jumbotron>
           </Container>
           <div />
