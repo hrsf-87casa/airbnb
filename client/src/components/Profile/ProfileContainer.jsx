@@ -19,7 +19,7 @@ export default class ProfileContainer extends React.Component {
     })
       .then(resp => resp.json())
       .then((data) => {
-        this.setState({ userInfo: data });
+        this.setState({ userInfo:data });
       })
       .catch(console.error);
   }

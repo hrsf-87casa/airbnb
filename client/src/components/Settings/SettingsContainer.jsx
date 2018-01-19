@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Container, Row, Col, Button, Nav, NavItem, NavLink } from 'reactstrap';
+import renderIf from 'render-if';
 
 export default class SettingsContainer extends React.Component {
   constructor(props) {
@@ -13,15 +15,15 @@ export default class SettingsContainer extends React.Component {
         backgroundColor: 'white',
         height: '100vh',
       },
-      tagline: {
-        backgroundColor: 'green',
-        height: '5vh',
+      sidebar: {
+        backgroundColor: 'white',
+        height: '100vh',
       },
-      profilePicture: {
+      content: {
         backgroundColor: 'yellow',
-        height: '25vh',
+        height: '100vh',
       },
-      profileInfo: {
+      contentContainer: {
         backgroundColor: 'red',
         height: '20vh',
       },
@@ -34,20 +36,36 @@ export default class SettingsContainer extends React.Component {
         height: '75vh',
       },
     };
+    // {renderIf(1+1===2) (<div>Hello, World!</div>)}
     return (
-      <Container fluid style={styles.container}>
+      <Container style={styles.container}>
         <Row>
-          <Col className="tagline" style={styles.tagline}>
-            Tagline goes here iowjeoiajfewajflkasjdflaj sdofj aofej alkwefjlkasj salkfj
+          <Col xs="3" className="sidebar" style={styles.sidebar}>
+            <Container>
+              <Nav vertical>
+                <NavItem>
+                  <NavLink href="#">Edit Profile</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink href="#">Photos</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink href="#">Reset Password</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink href='/profile'><Button>View Profile</Button></NavLink>
+                </NavItem>
+              </Nav>
+            </Container>
           </Col>
-        </Row>
-        <Row>
-          <Col xs="6" className="profilePicture" style={styles.profilePicture}>Profile Pic</Col>
-          <Col xs="6" className="profileInfo" style={styles.profileInfo}>Location Joined and Bio</Col>
-        </Row>
-        <Row>
-          <Col xs="6" className="miscInfo" style={styles.miscInfo}>Email, Phonenumber</Col>
-          <Col xs="6" className="reviews" style={styles.reviews}>Reviews Component</Col>
+          <Col xs="9" className="content" style={styles.content}>
+            <Container className="contentContainer" style={styles.contentContainer}>
+              test <br />
+              adsflkj <br />
+              Content goes here <br />
+              asdfjaiej <br />
+            </Container>
+          </Col>
         </Row>
       </Container>
     );

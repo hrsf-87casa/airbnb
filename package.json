@@ -41,6 +41,7 @@
     "react-router-dom": "^4.2.2",
     "react-transition-group": "^2.2.1",
     "reactstrap": "^5.0.0-alpha.4",
+    "render-if": "^0.1.1",
     "webpack": "^2.2.1",
     "webpack-css-loaders": "^1.0.0"
   },
