@@ -10,6 +10,7 @@ const airbnb = require('../airbnb');
 
 const bookings = require('./bookings');
 const listings = require('./listings');
+const profile = require('./profile');
 
 const router = express.Router();
 const reactRoute = (req, res) => res.sendFile(path.resolve(__dirname, '../client/dist/index.html'));
@@ -148,6 +149,18 @@ router.post('/api/listings/cancel', async (req, res) => {
     return res.status(500).json(err.stack);
   }
 });
+
+router.get('/api/user/profile', async (req, res) => {
+  try {
+    if (!req.session.passport) {
+      return res.sendStatus(401);
+    }
+    return res.status(200).json(await profile.getAllUserInfo(req.session.passport.user));
+  } catch (err) {
+    return res.status(500).json(err.stack);
+  }
+});
+
 
 /*
   React Router
