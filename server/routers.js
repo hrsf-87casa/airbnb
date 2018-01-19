@@ -184,9 +184,9 @@ router.get('/logoff', (req, res) => req.session.destroy(() => {
   res.redirect('/');
 }));
 router.get('/listings*', reactRoute);
-router.get('/bookings*', reactRoute);
-router.get('/host', reactRoute);
-router.get('/profile', reactRoute);
-router.get('/settings', reactRoute);
+router.get('/bookings*', protectedReactRoute);
+router.get('/host', protectedReactRoute);
+router.get('/profile', protectedReactRoute);
+router.get('/settings', protectedReactRoute);
 
 module.exports = router;
