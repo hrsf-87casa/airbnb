@@ -165,10 +165,8 @@ router.get(
   '/signup',
   (req, res) => (req.session.passport ? res.redirect('/') : reactRoute(req, res)),
 );
-router.get('/logoff', (req, res) => {
-  req.logout();
-  res.redirect('/');
-});
+
+router.get('/logoff', (req, res) => req.session.destroy(() => res.redirect('/')));
 router.get('/listings*', reactRoute);
 router.get('/bookings*', protectedReactRoute);
 router.get('/host', protectedReactRoute);
