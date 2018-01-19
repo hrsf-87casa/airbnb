@@ -12,6 +12,7 @@ import {
   DropdownMenu,
   DropdownItem,
 } from 'reactstrap';
+import Sticky from 'react-stickynode';
 import { Link } from 'react-router-dom';
 import Search from './Search.jsx';
 
@@ -30,8 +31,8 @@ export default class Navigation extends React.Component {
   }
   render() {
     return (
-      <div>
-        <Navbar color="faded" light expand="md">
+      <Sticky className="sticky navbar-container" id="navbar" innerZ={5}>
+        <Navbar color="white" light expand="md">
           <Link to="/">
             <img className="navLogo" src="/assets/logo.png" alt="airbnb" />
           </Link>
@@ -73,7 +74,7 @@ export default class Navigation extends React.Component {
             </Nav>
           </Collapse>
         </Navbar>
-      </div>
+      </Sticky>
     );
   }
 }
