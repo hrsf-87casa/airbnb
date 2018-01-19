@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, FormText, Container, Col } from 'reactstrap';
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -78,53 +78,46 @@ export default class Search extends React.Component {
       'Wyoming',
     ];
 
-    const styles = {
-      search: {
-        backgroundColor: 'white',
-        border: '1px solid #666',
-        paddingTop: '40px',
-        paddingBottom: '40px',
-        paddingLeft: '40px',
-        paddingRight: '40px',
-        maxWidth: '600px',
-        margin: '0 auto',
-      },
-    };
-
     return (
-      <div className="search-container" style={styles.search}>
-        <h1>Book a reservation now!</h1>
-        <FormGroup className="search-city-container">
-          <Label htmlFor="city">City</Label>
-          <Input
-            type="city"
-            name="city"
-            placeholder="city"
-            onChange={event => this.handleCityChange(event)}
-          />
-        </FormGroup>
-        <FormGroup className="search-state-container">
-          <Label className="state-label" htmlFor="state">
-            State
-          </Label>
-          <Input
-            className="state-select"
-            type="select"
-            name="state"
-            value={this.state.state}
-            onChange={event => this.handleStateChange(event)}
-          >
-            {states.map(state => (
-              <option value={state} key={state}>
-                {state}
-              </option>
-            ))}
-          </Input>
-        </FormGroup>
-        <Link to={`listings/${this.state.state.toLowerCase()}--${this.state.city.toLowerCase()}`}>
-          <Button color="primary"> Search! </Button>
-        </Link>
-      </div>
+      <Container>
+        <Col sm="12" md={{ size: 8, offset: 2 }}>
+          <h1>
+            <span className="search-brand-name">Aircasa</span>
+            <div className="search-tagline">
+              Book unique homes and experiences all over the world.
+            </div>
+          </h1>
+          <FormGroup className="search-city-container">
+            <Input
+              type="city"
+              name="city"
+              placeholder="city"
+              onChange={event => this.handleCityChange(event)}
+            />
+          </FormGroup>
+          <FormGroup className="search-state-container">
+            <Input
+              className="state-select"
+              type="select"
+              name="state"
+              value={this.state.state}
+              onChange={event => this.handleStateChange(event)}
+            >
+              {states.map(state => (
+                <option value={state} key={state}>
+                  {state}
+                </option>
+              ))}
+            </Input>
+          </FormGroup>
+          <Link to={`listings/${this.state.state.toLowerCase()}--${this.state.city.toLowerCase()}`}>
+            <Button className="search-button" color="primary">
+              {' '}
+              Search!{' '}
+            </Button>
+          </Link>
+        </Col>
+      </Container>
     );
   }
 }

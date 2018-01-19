@@ -35,7 +35,7 @@ export default class Navigation extends React.Component {
           <Link to="/">
             <img className="navLogo" src="/assets/logo.png" alt="airbnb" />
           </Link>
-          <NavbarBrand>airbnb-casa</NavbarBrand>
+
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             {!this.props.userId ? (
