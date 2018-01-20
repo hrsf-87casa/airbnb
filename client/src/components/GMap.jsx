@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import API from './../../../api/env.js';
 import GoogleMapReact from 'google-map-react';
 
 export default class GMap extends React.Component {
@@ -7,22 +6,25 @@ export default class GMap extends React.Component {
     super(props);
 
     this.state = {
-      latLong: this.props.latLong || { lat: 42.2828747, lng: -71.13467840000001 },
+      latLong: { lat: Number(1), lng: Number(2) },
+      lat: null,
+      lng: null,
       zoom: 15,
-      apiKey: '',
-      style: {
-        width: '100vw',
-        height: '60vh',
-      },
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    this.setState({ lat: Number(nextProps.lat), lng: Number(nextProps.lng) });
+  }
+
   render() {
+    console.log(this.props.listing);
     return (
-      <div className="google-map" style={this.state.style}>
+      <div className="gmap-container" style={this.state.style}>
         <GoogleMapReact
-          bootstrapURLKeys={{ key: this.state.apiKey }}
-          defaultCenter={this.state.latLong}
+          bootstrapURLKeys={{ key: 'AIzaSyA9TuRPfrcICY2LU4Nzys6-jq7yfWs2k9A' }}
+          defaultCenter={{ lat: this.state.lat, lng: this.state.lng }}
           defaultZoom={this.state.zoom}
           defaultOptions={{
             streetViewControl: false,
@@ -35,8 +37,9 @@ export default class GMap extends React.Component {
           }}
           disableDefaultUI
         >
-          <MapContainer latLong={this.state.latLong} />
+          <div className="gmap-circle" lat={this.state.lat} lng={this.state.lng} />
         </GoogleMapReact>
+        Exact location information is provided after a booking is confirmed.
       </div>
     );
   }
