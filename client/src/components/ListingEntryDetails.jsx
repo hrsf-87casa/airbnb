@@ -36,6 +36,7 @@ export default class ListingEntryDetails extends React.Component {
     fetch(`/api/listings/details/${this.state.listingId}`)
       .then(resp => resp.json())
       .then((listing) => {
+        console.log(listing);
         this.setState({ listing });
       })
       .catch(console.error);
@@ -55,7 +56,6 @@ export default class ListingEntryDetails extends React.Component {
         backgroundImage: `url(${this.state.listing.pic_url})`,
       },
     };
-
     return (
       <div className="list-entry-details-container">
         <div className="container-fluid">
@@ -114,12 +114,14 @@ export default class ListingEntryDetails extends React.Component {
               <ListGroupItemHeading>Cancellation Policy</ListGroupItemHeading>
               <ListGroupItemText>{this.state.listing.cancellation_policy}</ListGroupItemText>
             </ListGroupItem>
+            <div className="container gmap-component-container">
+              <h3>The Neighborhood</h3>
+              <GMap lat={this.state.listing.lat} lng={this.state.listing.lng} />
+            </div>
           </ListGroup>
           <div className="listgroup-bookingwindow">
             <BookingWindow key={this.state.listing.id} listing={this.state.listing} />
           </div>
-
-          {/* <GMap latLong={this.state.latLong} /> */}
         </div>
       </div>
     );
