@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import { BrowserRouter, Route, BrowserHistory } from 'react-router-dom';
-import UserComponent from './components/UserComponent.jsx';
+import Bookings from './components/Bookings.jsx';
 import ListingEntryDetails from './components/ListingEntryDetails.jsx';
 import Results from './components/Results.jsx';
 import App from './components/App.jsx';
@@ -42,7 +42,7 @@ class Main extends React.Component {
             path="/login"
             render={props => <Login {...props} setUserId={e => this.setUserId(e)} />}
           />
-          <Route path="/bookings" component={UserComponent} />
+          <Route path="/bookings" component={Bookings} />
           <Route exact path="/listings/:state--:city" component={Results} />
           <Route path="/listings/:state--:city/:id" component={ListingEntryDetails} />
           <Route path="/host" component={AddListing} />
@@ -56,4 +56,3 @@ class Main extends React.Component {
 }
 
 ReactDOM.render(<Main />, document.getElementById('app'));
-
