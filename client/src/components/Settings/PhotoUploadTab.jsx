@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Row, Col, Form, FormGroup, Input, Label } from 'reactstrap';
 import Dropzone from 'react-dropzone';
 import upload from 'superagent';
