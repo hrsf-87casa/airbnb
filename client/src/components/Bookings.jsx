@@ -2,9 +2,12 @@ import React from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import ListingEntry from './ListingEntry.jsx';
-import { CardColumns, Container, Jumbotron } from 'reactstrap';
+import PresentTripEntry from './PresentTripEntry.jsx';
+import Sticky from 'react-stickynode';
 
-class UserComponent extends React.Component {
+import { CardColumns, Container, Col } from 'reactstrap';
+
+export default class Bookings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -57,47 +60,44 @@ class UserComponent extends React.Component {
           <Container style={{ paddingBottom: '10px' }}>
             <center>
               <h3>
-                <span style={{ textTransform: 'capitalize' }}>Current Bookings</span>
+                <Sticky className="sticky" innerZ={5} top={50} bottomBoundary={900}>
+                  <span style={{ textTransform: 'capitalize' }}>Current Bookings</span>
+                </Sticky>
               </h3>
             </center>
           </Container>
-          <Container>
-            <Jumbotron>
-              <CardColumns>
-                {this.state.currentBookings.map(booking => (
-                  <ListingEntry
-                    listing={booking.listing}
-                    booking={booking}
-                    key={booking.id}
-                    getCurrentBookings={this.getCurrentBookings}
-                    showButton
-                  />
-                ))}
-              </CardColumns>
-            </Jumbotron>
-          </Container>
+          <div id="current">
+            {this.state.currentBookings.map(booking => (
+              <PresentTripEntry
+                listing={booking.listing}
+                booking={booking}
+                key={booking.id}
+                getCurrentBookings={this.getCurrentBookings}
+              />
+            ))}
+          </div>
           <div />
           <Container style={{ paddingBottom: '10px' }}>
             <center>
               <h3>
-                <span style={{ textTransform: 'capitalize' }}>Past Bookings</span>
+                <Sticky className="sticky" innerZ={5} top={50}>
+                  <span style={{ textTransform: 'capitalize' }}>Past Bookings</span>
+                </Sticky>
               </h3>
             </center>
           </Container>
           <Container>
-            <Jumbotron>
-              <CardColumns>
-                {this.state.pastBookings.map(booking => (
-                  <ListingEntry
-                    listing={booking.listing}
-                    booking={booking}
-                    key={booking.id}
-                    getCurrentBookings={this.getCurrentBookings}
-                    showButton={false}
-                  />
-                ))}
-              </CardColumns>
-            </Jumbotron>
+            <CardColumns>
+              {this.state.pastBookings.map(booking => (
+                <ListingEntry
+                  listing={booking.listing}
+                  booking={booking}
+                  key={booking.id}
+                  getCurrentBookings={this.getCurrentBookings}
+                  showButton={false}
+                />
+              ))}
+            </CardColumns>
           </Container>
           <div />
         </div>
@@ -105,5 +105,3 @@ class UserComponent extends React.Component {
     );
   }
 }
-
-export default UserComponent;
