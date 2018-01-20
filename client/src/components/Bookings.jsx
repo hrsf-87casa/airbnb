@@ -5,7 +5,7 @@ import ListingEntry from './ListingEntry.jsx';
 import PresentTripEntry from './PresentTripEntry.jsx';
 import Sticky from 'react-stickynode';
 
-import { CardColumns, Container, Col } from 'reactstrap';
+import { CardColumns, Container, Col, Row } from 'reactstrap';
 
 export default class Bookings extends React.Component {
   constructor(props) {
@@ -87,7 +87,7 @@ export default class Bookings extends React.Component {
             </center>
           </Container>
           <Container>
-            <CardColumns>
+            <Row>
               {this.state.pastBookings.map(booking => (
                 <ListingEntry
                   listing={booking.listing}
@@ -97,7 +97,7 @@ export default class Bookings extends React.Component {
                   showButton={false}
                 />
               ))}
-            </CardColumns>
+            </Row>
           </Container>
           <div />
         </div>
