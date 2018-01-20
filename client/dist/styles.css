@@ -8,6 +8,7 @@
 
 body {
   font-family: Circular, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
   font-size: 14px;
   line-height: 1.43;
   color: #484848;
@@ -205,6 +206,121 @@ hr.bookingwindow-hr {
   font-weight: 700 !important;
 }
 
+.trip-container {
+  max-width: 1127px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 1128px;
+  margin: 10px auto 80px auto;
+  color: #484848;
+  padding: 0;
+  border: 1px #dce0e0 solid !important;
+}
+
+.trip-button-container {
+  margin-bottom: 5px;
+}
+
+.dates {
+  font-size: 16px;
+}
+
+.trip-schedule {
+  padding: 20px 320px 20px 20px;
+}
+
+.details-city {
+  font-size: 36px;
+}
+
+.check-in-out-time {
+  font-size: 11px;
+}
+
+.check-in-out-delimiter {
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 20px;
+}
+
+.check-in-section {
+  padding-left: 0;
+}
+
+.check-out-section {
+}
+
+.text-muted {
+  color: #767676;
+}
+
+.listing-name {
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
+.listing-name:hover {
+  text-decoration: underline;
+}
+
+.pin {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -moz-box-orient: vertical;
+  -moz-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: 100% !important;
+  width: 70% !important;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-weight: bold;
+  color: #fff;
+}
+
+.trip-entry-hr {
+  border: 0.5px solid white;
+  margin-right: 430px;
+  margin-left: 3%;
+  padding-top: 0px;
+  margin-top: 10px;
+}
+
+.pin,
+.listing-image-container {
+  width: 50%;
+  height: 100%;
+  background-position: 50% 50% !important;
+}
+
+.listing-image-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  object-fit: scale-down;
+  background: #000;
+  opacity: 0.8;
+  content: ' ';
+}
+
+.cancel-button {
+  background: rgb(255, 90, 95);
+}
+
 form {
   //width: 320px;
   padding: 5px;
@@ -240,7 +356,6 @@ form {
   margin-top: 15px;
 }
 
-
 .todo {
   float: right;
   cursor: pointer;
@@ -259,7 +374,8 @@ form {
   text-decoration: none !important;
   border: 2px solid transparent !important;
   border-radius: 4px !important;
-  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif !important;
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+    Helvetica Neue, sans-serif !important;
   font-size: 19px !important;
   line-height: 22px !important;
   padding-top: 12px !important;
@@ -268,7 +384,7 @@ form {
   padding-right: 24px !important;
   padding-left: 24px !important;
   min-width: 77.66563145999496px !important;
-  background: #FF5A5F !important;
+  background: #ff5a5f !important;
 }
 
 .tabLabel {
@@ -279,4 +395,4 @@ form {
   padding-bottom: '8px';
   font-family: 'Open Sans';
   font-size: '16px';
-},
+}

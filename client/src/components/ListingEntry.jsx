@@ -17,31 +17,7 @@ import ListingEntryDetails from './ListingEntryDetails.jsx';
 export default class ListingEntry extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isInBooking: this.props.showButton,
-      modal: false,
-    };
-    this.toggle = this.toggle.bind(this);
-    this.cancelBooking = this.cancelBooking.bind(this);
-  }
-
-  toggle() {
-    this.setState({
-      modal: !this.state.modal,
-    });
-  }
-
-  cancelBooking() {
-    fetch('/api/bookings/cancel', {
-      method: 'POST',
-      credentials: 'include',
-      body: JSON.stringify({
-        bookingId: this.props.booking.id,
-      }),
-      headers: { 'content-type': 'application/json' },
-    })
-      .then(this.props.getCurrentBookings())
-      .catch(console.error);
+    this.state = {};
   }
 
   render() {
