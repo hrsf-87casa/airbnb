@@ -396,3 +396,24 @@ form {
   font-family: 'Open Sans';
   font-size: '16px';
 }
+
+.gmap-component-container {
+  height: 100%;
+  width: 100%;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.gmap-container {
+  height: 50vh;
+  width: 50vw;
+}
+
+.gmap-circle {
+  background: #8ddfd2;
+  border: 2px solid #84c4bf;
+  width: 150px;
+  height: 150px;
+  opacity: 0.7;
+  border-radius: 50%;
+}
