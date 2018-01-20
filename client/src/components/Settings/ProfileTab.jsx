@@ -123,13 +123,3 @@ export default class ProfileTab extends React.Component {
     );
   }
 }
-
-ProfileTab.propTypes = {
-  optionalArray: PropTypes.array,
-  optionalBool: PropTypes.bool,
-  optionalFunc: PropTypes.func,
-  optionalNumber: PropTypes.number,
-  optionalObject: PropTypes.object,
-  optionalString: PropTypes.string,
-  optionalSymbol: PropTypes.symbol,
-};
