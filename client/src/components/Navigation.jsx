@@ -72,6 +72,7 @@ export default class Navigation extends React.Component {
                     <NavLink style={styles.navText}>Host</NavLink>
                   </Link>
                 </NavItem>
+
                 <NavItem>
                   <Link to="/bookings">
                     <NavLink style={styles.navText}>Bookings</NavLink>
