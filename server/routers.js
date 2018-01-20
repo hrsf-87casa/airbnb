@@ -192,10 +192,9 @@ router.get('/api/user/profile', async (req, res) => {
 });
 
 // File Upload Route handling
-// TODO Set these as environment variables
 AWS.config.update({
-  accessKeyId: 'AKIAIGV3I6CABFE4JKYQ',
-  secretAccessKey: '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',
+  accessKeyId: PROCESS.env.AWSKEYID,
+  secretAccessKey: PROCESS.env.AWSSECRETKEY,
   subregion: 'us-west-1',
 });
 const s3 = new AWS.S3();
