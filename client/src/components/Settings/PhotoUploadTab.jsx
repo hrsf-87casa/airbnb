@@ -1,51 +1,47 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import {
-  Row,
-  Col,
-  Form,
-  FormGroup,
-  Input,
-  Label
-} from 'reactstrap'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Row, Col, Form, FormGroup, Input, Label } from 'reactstrap';
+import Dropzone from 'react-dropzone';
+import upload from 'superagent';
 
 export default class PhotoUploadTab extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {}
+  constructor(props) {
+    super(props);
+  }
+  onDrop(files) {
+    upload
+      .post('/api/user/profilepictureupload')
+      .attach('profilePicture', files[0])
+      .end((err, res) => {
+        if (err) {
+          console.error(err);
+        }
+        alert('File Uploaded!');
+      });
   }
 
-  render () {
+  render() {
     return (
-      <Form>
+      <Form onSubmit={this.onFormSubmit}>
         <br />
         <FormGroup>
           <Row>
-            <Col xs='3'>
-              <Label for='profilePicture' className="tabLabel">
+            <Col xs="3">
+              <Label for="profilePicture" className="tabLabel">
                 Upload a Profile Picture!
               </Label>
             </Col>
-            <Col xs='9'>
-              <Input type='file' name='profilePicture' id='profilePicture' />
+            <Col xs="9">
+              <Dropzone onDrop={this.onDrop} multiple={false}>
+                <div style={{ padding: '12px 12px 12px 12px' }}>
+                  {' '}
+                  Drop a file or select a file to upload{' '}
+                </div>
+              </Dropzone>
             </Col>
           </Row>
         </FormGroup>
-        <br />
-        <button className="todo">
-          Upload
-        </button>
       </Form>
-    )
+    );
   }
-}
-
-PhotoUploadTab.propTypes = {
-  optionalArray: PropTypes.array,
-  optionalBool: PropTypes.bool,
-  optionalFunc: PropTypes.func,
-  optionalNumber: PropTypes.number,
-  optionalObject: PropTypes.object,
-  optionalString: PropTypes.string,
-  optionalSymbol: PropTypes.symbol
 }
