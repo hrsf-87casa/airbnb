@@ -1,12 +1,12 @@
 import React from 'react';
-import { Container, CardColumns } from 'reactstrap';
+import { Container, CardDeck } from 'reactstrap';
 
 import ListingEntry from './ListingEntry.jsx';
 
 export default ({ listings }) => (
   <Container>
-    <CardColumns>
+    <CardDeck>
       {listings.map(item => <ListingEntry listing={item} key={item.id} showButton={false} />)}
-    </CardColumns>
+    </CardDeck>
   </Container>
 );
