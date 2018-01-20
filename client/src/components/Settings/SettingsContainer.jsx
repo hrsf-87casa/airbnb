@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {
   Container,
@@ -41,11 +42,11 @@ export default class SettingsContainer extends React.Component {
     const styles = {
       container: {
         backgroundColor: 'white',
-        height: '100vh',
+        height: '100vh'
       },
       sidebar: {
         backgroundColor: 'white',
-        height: '100vh',
+        height: '100vh'
       },
       content: {
         backgroundColor: '#edefed',
@@ -90,10 +91,6 @@ export default class SettingsContainer extends React.Component {
           </Col>
         </Row>
       </Container>
-    );
+    )
   }
 }
-
-// option to upload a file to database as profile picture
-// option to set displayname if you choose which will render on the nav bar
-

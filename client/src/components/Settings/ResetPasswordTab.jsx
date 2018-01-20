@@ -52,3 +52,4 @@ export default class ResetPasswordTab extends React.Component {
     );
   }
 }
+

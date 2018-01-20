@@ -1,17 +1,5 @@
 import React from 'react';
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import Sticky from 'react-stickynode';
 import { Link } from 'react-router-dom';
 
@@ -29,25 +17,51 @@ export default class Navigation extends React.Component {
     });
   }
   render() {
+    const styles = {
+      nav: {
+        height: '80px',
+        padding: '0 0 0 0',
+        margin: '0 0 0 0',
+        borderBottom: '1px solid #e3e3e3',
+      },
+      logo: {
+        height: '34px',
+        width: '34px',
+        objectFit: 'cover',
+        paddingLeft: '20px',
+        paddingRight: '50px',
+      },
+
+      navText: {
+        fontFamily: 'Circular, "Helvetica Neue", Helvetica, Arial, sans-serif',
+        fontSize: '14px',
+        fontWeight: '450',
+        color: '#4a4a4a',
+        lineHeight: '1.43',
+        padding: '20px',
+      },
+    };
     return (
       <Sticky className="sticky navbar-container" id="navbar" innerZ={5}>
-        <Navbar color="white" light expand="md">
-          <Link to="/">
-            <img className="navLogo" src="/assets/logo.png" alt="airbnb" />
+        <Navbar style={styles.nav} color="white" light expand="md">
+          <Link style={styles.logo} to="/">
+            <img className="navLogo" src="/assets/logo.png" alt="aircasa" />
           </Link>
-          <NavbarBrand>airbnb-casa</NavbarBrand>
+          <Link style={{ color: 'black', textDecoration: 'none' }} to="/">
+            <NavbarBrand>airbnb-casa</NavbarBrand>
+          </Link>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             {!this.props.userId ? (
               <Nav className="ml-auto" navbar>
                 <NavItem>
                   <Link to="/login">
-                    <NavLink>Log In</NavLink>
+                    <NavLink style={styles.navText}>Log In</NavLink>
                   </Link>
                 </NavItem>
                 <NavItem>
                   <Link to="/signup">
-                    <NavLink>Sign Up</NavLink>
+                    <NavLink style={styles.navText}>Sign Up</NavLink>
                   </Link>
                 </NavItem>
               </Nav>
@@ -55,27 +69,29 @@ export default class Navigation extends React.Component {
               <Nav className="ml-auto" navbar>
                 <NavItem>
                   <Link to="/host">
-                    <NavLink>Host</NavLink>
+                    <NavLink style={styles.navText}>Host</NavLink>
                   </Link>
                 </NavItem>
 
                 <NavItem>
                   <Link to="/bookings">
-                    <NavLink>Bookings</NavLink>
+                    <NavLink style={styles.navText}>Bookings</NavLink>
                   </Link>
                 </NavItem>
                 <NavItem>
                   <Link to="profile">
-                    <NavLink>Profile</NavLink>
+                    <NavLink style={styles.navText}>Profile</NavLink>
                   </Link>
                 </NavItem>
                 <NavItem>
                   <Link to="/settings">
-                    <NavLink>Settings</NavLink>
+                    <NavLink style={styles.navText}>Settings</NavLink>
                   </Link>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="/logoff">Log Out</NavLink>
+                  <NavLink href="/logoff" style={styles.navText}>
+                    Log Out
+                  </NavLink>
                 </NavItem>
               </Nav>
             )}

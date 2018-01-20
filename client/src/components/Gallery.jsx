@@ -20,7 +20,9 @@ export default class Gallery extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.formatImages(nextProps.images);
+    if (nextProps.images) {
+      this.formatImages(nextProps.images);
+    }
     this.setState({ lightboxIsOpen: nextProps.isOpen });
   }
 
@@ -81,19 +83,3 @@ export default class Gallery extends Component {
     );
   }
 }
-
-// {
-//   this.props.heading && <h2>{this.props.heading}</h2>;
-// }
-// {
-//   this.props.subheading && <p>{this.props.subheading}</p>;
-// }
-// {
-//   this.renderGallery();
-// }
-
-// showThumbnails={this.props.showThumbnails}
-//           spinner={this.props.spinner}
-//           spinnerColor={this.props.spinnerColor}
-//           spinnerSize={this.props.spinnerSize}
-//           theme={this.props.theme}
