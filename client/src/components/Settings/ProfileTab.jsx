@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Row, Col, Form, FormGroup, Input, Label, UncontrolledAlert } from 'reactstrap';
 
 export default class ProfileTab extends React.Component {
   constructor(props) {
@@ -10,6 +10,7 @@ export default class ProfileTab extends React.Component {
       location: '',
       tagline: '',
       bio: '',
+      isSuccess: null,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -21,7 +22,9 @@ export default class ProfileTab extends React.Component {
   }
 
   updateProfile() {
-    const { displayName, location, tagline, bio } = this.state;
+    const {
+      displayName, location, tagline, bio,
+    } = this.state;
     fetch('/api/updateprofile', {
       method: 'POST',
       credentials: 'include',
@@ -33,16 +36,15 @@ export default class ProfileTab extends React.Component {
       }),
       headers: { 'content-type': 'application/JSON' },
     })
-      .then(resp => resp.json())
-      .then(data => {
-        console.log(data);
+      .then((data) => {
+        this.setState({ isSuccess: true });
       })
       .catch(console.error);
   }
 
   render() {
     return (
-      <Form>
+      <div>
         <br />
         <FormGroup>
           <Row>
@@ -119,8 +121,11 @@ export default class ProfileTab extends React.Component {
         <button className="todo" onClick={() => this.updateProfile()}>
           Submit
         </button>
-      </Form>
+        <br />
+        <br />
+        <br />
+        {this.state.isSuccess && <UncontrolledAlert> Updated Profile! </UncontrolledAlert>}
+      </div>
     );
   }
 }
-

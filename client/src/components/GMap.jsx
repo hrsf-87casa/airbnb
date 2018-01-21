@@ -14,12 +14,10 @@ export default class GMap extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     this.setState({ lat: Number(nextProps.lat), lng: Number(nextProps.lng) });
   }
 
   render() {
-    console.log(this.props.listing);
     return (
       <div className="gmap-container" style={this.state.style}>
         <GoogleMapReact
